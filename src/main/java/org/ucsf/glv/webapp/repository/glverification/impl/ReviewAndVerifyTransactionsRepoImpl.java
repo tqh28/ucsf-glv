@@ -3,14 +3,19 @@ package org.ucsf.glv.webapp.repository.glverification.impl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
 
 import org.ucsf.glv.webapp.config.connection.Jdbc;
 import org.ucsf.glv.webapp.repository.glverification.ReviewAndVerifyTransactionsRepo;
 import org.ucsf.glv.webapp.util.ConvertData;
 
+import com.google.inject.Singleton;
+
+@Singleton
 public class ReviewAndVerifyTransactionsRepoImpl implements ReviewAndVerifyTransactionsRepo {
 
-    public String getTransactionsData(String sessionUserId, String reconGroupTitle) throws SQLException {
+    public List<HashMap<String, Object>> getTransactionsData(String sessionUserId, String reconGroupTitle) throws SQLException {
         String sql;
         PreparedStatement prepareStatement;
 
@@ -27,7 +32,7 @@ public class ReviewAndVerifyTransactionsRepoImpl implements ReviewAndVerifyTrans
 
         ResultSet rs = prepareStatement.executeQuery();
 
-        String json = ConvertData.convertResultSetToJson(rs);
+        List<HashMap<String, Object>> json = ConvertData.convertResultSetToListHashMap(rs);
 
         rs.close();
         prepareStatement.close();

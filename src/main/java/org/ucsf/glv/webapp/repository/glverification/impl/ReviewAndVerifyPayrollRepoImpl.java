@@ -9,14 +9,16 @@ import java.util.List;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.ucsf.glv.webapp.config.connection.Jdbc;
 import org.ucsf.glv.webapp.repository.glverification.ReviewAndVerifyPayrollRepo;
 import org.ucsf.glv.webapp.util.ConvertData;
 
+import com.google.inject.Singleton;
+
+@Singleton
 public class ReviewAndVerifyPayrollRepoImpl implements ReviewAndVerifyPayrollRepo {
 
-    public String getPayrollData(String deptId, String businessUnit, String fiscalYear, String fiscalMonth)
+    public List<HashMap<String, Object>> getPayrollData(String deptId, String businessUnit, String fiscalYear, String fiscalMonth)
             throws SQLException {
         String sql = "SELECT uniqueid, PositionTitleCategory, Employee_Id, Employee_name, ReconComment, DeptCd, FundCd, ProjectCd, FunctionCd, FlexCd, DeptSite, PlanTitleCdTitle, ReconUser, ReconDate, S05_Nov, ReconStatusCd FROM SOM_BFA_ReconEmployeeGLV WHERE (DeptLevel1Cd = ? OR DeptLevel2Cd = ? OR DeptLevel3Cd = ? OR DeptLevel4Cd = ? OR DeptLevel5Cd = ? OR DeptLevel6Cd = ?) AND ReconStatusCd IN (0, 1000, 3000) AND FiscalYear = ? AND FiscalPeriod = ? AND BusinessUnitCd = ? ORDER BY PositionTitleCategory ASC";
 
@@ -33,13 +35,13 @@ public class ReviewAndVerifyPayrollRepoImpl implements ReviewAndVerifyPayrollRep
 
         ResultSet rs = preparedStatement.executeQuery();
 
-        String result = ConvertData.convertResultSetToJson(rs);
+        List<HashMap<String, Object>> result = ConvertData.convertResultSetToListHashMap(rs);
         rs.close();
         preparedStatement.close();
         return result;
     }
 
-    public String getPayrollFTEData(String sessionUserId, int fiscalYear) throws SQLException {
+    public List<HashMap<String, Object>> getPayrollFTEData(String sessionUserId, int fiscalYear) throws SQLException {
         StringBuilder sql = new StringBuilder(
                 "SELECT ISNULL(PositionTitleCategory, 'Total') AS PositionTitleCategory, ")
                         .append("SUM(FTEM01) AS FTEM01,SUM(FTEM02) AS FTEM02,SUM(FTEM03) AS FTEM03,SUM(FTEM04) AS FTEM04, ")
@@ -56,7 +58,7 @@ public class ReviewAndVerifyPayrollRepoImpl implements ReviewAndVerifyPayrollRep
         preparedStatement.setInt(2, fiscalYear);
         ResultSet rs = preparedStatement.executeQuery();
 
-        String result = ConvertData.convertResultSetToJson(rs);
+        List<HashMap<String, Object>> result = ConvertData.convertResultSetToListHashMap(rs);
 
         rs.close();
         preparedStatement.close();
@@ -64,7 +66,7 @@ public class ReviewAndVerifyPayrollRepoImpl implements ReviewAndVerifyPayrollRep
         return result;
     }
 
-    public String getPayrollExpenseData(String sessionUserId, String empName, int start, int length)
+    public HashMap<String, Object> getPayrollExpenseData(String sessionUserId, String empName, int start, int length)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
         StringBuilder whereCondition = new StringBuilder("SessionUserid = ? ");
         boolean isEmpNameNull = true;
@@ -108,8 +110,7 @@ public class ReviewAndVerifyPayrollRepoImpl implements ReviewAndVerifyPayrollRep
         result.put("data", dataHashMapList);
         result.put("recordsTotal", totalRecords);
         result.put("recordsFiltered", totalRecords);
-        ObjectMapper objectMapper = new ObjectMapper();
 
-        return objectMapper.writeValueAsString(result);
+        return result;
     }
 }

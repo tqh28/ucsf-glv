@@ -7,7 +7,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-@ApplicationPath("/webapi")
+@ApplicationPath("")
 public class Config extends ResourceConfig {
 
     public Config() {

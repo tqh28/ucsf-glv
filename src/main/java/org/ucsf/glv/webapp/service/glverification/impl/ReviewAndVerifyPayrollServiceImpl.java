@@ -16,13 +16,9 @@ import com.google.inject.Singleton;
 public class ReviewAndVerifyPayrollServiceImpl implements ReviewAndVerifyPayrollService {
 
     @Inject
-    ReviewAndVerifyPayrollRepo reviewAndVerifyPayrollRepo;
+    private ReviewAndVerifyPayrollRepo reviewAndVerifyPayrollRepo;
 
-    private ObjectMapper mapper;
-
-    public ReviewAndVerifyPayrollServiceImpl() {
-        mapper = new ObjectMapper();
-    }
+    private ObjectMapper mapper = new ObjectMapper();
 
     public String getPayrollData(String deptId, String businessUnit, String fiscalYear, String fiscalMonth)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {

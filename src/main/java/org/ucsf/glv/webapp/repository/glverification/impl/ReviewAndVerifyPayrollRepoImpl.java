@@ -20,9 +20,12 @@ public class ReviewAndVerifyPayrollRepoImpl implements ReviewAndVerifyPayrollRep
 
     public List<HashMap<String, Object>> getPayrollData(String deptId, String businessUnit, String fiscalYear, String fiscalMonth)
             throws SQLException {
-        String sql = "SELECT uniqueid, PositionTitleCategory, Employee_Id, Employee_name, ReconComment, DeptCd, FundCd, ProjectCd, FunctionCd, FlexCd, DeptSite, PlanTitleCdTitle, ReconUser, ReconDate, S05_Nov, ReconStatusCd FROM SOM_BFA_ReconEmployeeGLV WHERE (DeptLevel1Cd = ? OR DeptLevel2Cd = ? OR DeptLevel3Cd = ? OR DeptLevel4Cd = ? OR DeptLevel5Cd = ? OR DeptLevel6Cd = ?) AND ReconStatusCd IN (0, 1000, 3000) AND FiscalYear = ? AND FiscalPeriod = ? AND BusinessUnitCd = ? ORDER BY PositionTitleCategory ASC";
+        StringBuilder sql = new StringBuilder("SELECT uniqueid, PositionTitleCategory, Employee_Id, Employee_name, ReconComment, DeptCd, FundCd, ProjectCd, FunctionCd, FlexCd, DeptSite, PlanTitleCdTitle, ReconUser, ReconDate, S05_Nov, ReconStatusCd ")
+                .append("FROM SOM_BFA_ReconEmployeeGLV ")
+                .append("WHERE (DeptLevel1Cd = ? OR DeptLevel2Cd = ? OR DeptLevel3Cd = ? OR DeptLevel4Cd = ? OR DeptLevel5Cd = ? OR DeptLevel6Cd = ?) AND ReconStatusCd IN (0, 1000, 3000) AND FiscalYear = ? AND FiscalPeriod = ? AND BusinessUnitCd = ? ")
+                .append("ORDER BY PositionTitleCategory ASC");
 
-        PreparedStatement preparedStatement = Jdbc.getPrepareStatement(sql);
+        PreparedStatement preparedStatement = Jdbc.getPrepareStatement(sql.toString());
         preparedStatement.setString(1, deptId);
         preparedStatement.setString(2, deptId);
         preparedStatement.setString(3, deptId);

@@ -22,8 +22,11 @@ public class DashboardRepoImpl implements DashboardRepo {
     public List<HashMap<String, Object>> getDashboardData(String sessionUserId)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
 
-        String sql = "SELECT ReconGroupTitle, PercentCompleted, PercentNotcompleted, TotalSelectedAmount, TotalSelectedCount, TotalActivityAmount, TotalActivityCount, TotalNotVerifiedAmount, TotalNotVerifiedCount FROM vw_SOM_AA_Dashboard WHERE SessionUserid = ? ORDER BY CASE WHEN ReconGroupTitle = 'Total' THEN 1 ELSE 0 END, ReconGroupTitle ASC";
-        PreparedStatement prepareStatement = Jdbc.getPrepareStatement(sql);
+        StringBuilder sql = new StringBuilder("SELECT ReconGroupTitle, PercentCompleted, PercentNotcompleted, TotalSelectedAmount, TotalSelectedCount, TotalActivityAmount, TotalActivityCount, TotalNotVerifiedAmount, TotalNotVerifiedCount ")
+                .append("FROM vw_SOM_AA_Dashboard ")
+                .append("WHERE SessionUserid = ? ")
+                .append("ORDER BY CASE WHEN ReconGroupTitle = 'Total' THEN 1 ELSE 0 END, ReconGroupTitle ASC");
+        PreparedStatement prepareStatement = Jdbc.getPrepareStatement(sql.toString());
         prepareStatement.setString(1, sessionUserId);
 
         ResultSet rs = prepareStatement.executeQuery();

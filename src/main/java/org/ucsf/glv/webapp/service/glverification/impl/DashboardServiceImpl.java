@@ -19,11 +19,7 @@ public class DashboardServiceImpl implements DashboardService {
     @Inject
     private DashboardRepo dashboardRepo;
 
-    private ObjectMapper mapper;
-
-    public DashboardServiceImpl() {
-        mapper = new ObjectMapper();
-    }
+    private ObjectMapper mapper = new ObjectMapper();
 
     public String getDashboardData(String sessionUserId)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {

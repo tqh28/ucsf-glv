@@ -11,7 +11,7 @@
     <name>ucsf-glv</name>
 
     <build>
-    <finalName>ucsf-glv</finalName>
+        <finalName>ucsf-glv</finalName>
         <plugins>
             <!-- <plugin> <groupId>org.eclipse.jetty</groupId> <artifactId>jetty-maven-plugin</artifactId> 
                 <version>9.4.8.v20171121</version> <configuration> <war>${project.build.directory}/jersey2-guice-example.war</war> 
@@ -44,10 +44,36 @@
             <artifactId>guice</artifactId>
             <version>${guice.version}</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>${mssql.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate-core.version}</version>
+        </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-mapper-asl -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>${jackson-mapper-asl.version}</version>
+        </dependency>
     </dependencies>
+
     <properties>
         <jersey.version>2.26-b03</jersey.version>
         <guice.version>4.2.0</guice.version>
+        <hibernate-core.version>5.3.1.Final</hibernate-core.version>
+        <mssql.version>6.4.0.jre8</mssql.version>
+        <jackson-mapper-asl.version>1.9.13</jackson-mapper-asl.version>
+        
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>

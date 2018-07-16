@@ -12,14 +12,14 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.ucsf.glv.webapp.service.glverification.DashboardService;
 
-@Path("/gl-verification/dashboard")
+@Path("gl-verification/dashboard")
 public class DashboardController {
 
     @Inject
     private DashboardService dashboardService;
 
     @GET
-    @Path("/get-dashboard-data")
+    @Path("get-dashboard-data")
     public String getDashboardData(@QueryParam("sessionUserId") String sessionUserId)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
         return dashboardService.getDashboardData(sessionUserId);

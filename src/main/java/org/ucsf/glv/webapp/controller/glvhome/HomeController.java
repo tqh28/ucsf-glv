@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.QueryParam;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -22,6 +23,13 @@ public class HomeController {
     public String getControlPointList()
             throws JsonGenerationException, JsonMappingException, IOException, SQLException {
         return homeService.getControlPointList();
+    }
+    
+    @GET
+    @Path("get-list-roll-up-data")
+    public String getListRollUpData(@QueryParam("sessionUserId") String sessionUserId)
+            throws JsonGenerationException, JsonMappingException, SQLException, IOException {
+        return homeService.getListRollUpData(sessionUserId);
     }
 
 }

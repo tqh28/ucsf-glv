@@ -12,14 +12,14 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.ucsf.glv.webapp.service.glverification.ReviewAndVerifyTransactionsService;
 
-@Path("/gl-verification/review-and-verify-transactions")
+@Path("gl-verification/review-and-verify-transactions")
 public class ReviewAndVerifyTransactionsController {
 
     @Inject
     private ReviewAndVerifyTransactionsService reviewAndVerifyTransactionsService;
 
     @GET
-    @Path("/get-transactions-data")
+    @Path("get-transactions-data")
     public String getTransactionsData(@QueryParam("sessionUserId") String sessionUserId,
             @QueryParam("reconGroupTitle") String reconGroupTitle)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {

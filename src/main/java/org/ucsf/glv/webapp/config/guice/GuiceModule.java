@@ -2,6 +2,8 @@ package org.ucsf.glv.webapp.config.guice;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.ucsf.glv.webapp.config.connection.Jdbc;
+import org.ucsf.glv.webapp.repository.SOM_BFA_UserPreferences;
+import org.ucsf.glv.webapp.repository.vw_Get_Deparments;
 import org.ucsf.glv.webapp.repository.glverification.DashboardRepo;
 import org.ucsf.glv.webapp.repository.glverification.ReviewAndVerifyPayrollRepo;
 import org.ucsf.glv.webapp.repository.glverification.ReviewAndVerifyTransactionsRepo;
@@ -10,6 +12,8 @@ import org.ucsf.glv.webapp.repository.glverification.impl.ReviewAndVerifyPayroll
 import org.ucsf.glv.webapp.repository.glverification.impl.ReviewAndVerifyTransactionsRepoImpl;
 import org.ucsf.glv.webapp.repository.glvhome.HomeRepo;
 import org.ucsf.glv.webapp.repository.glvhome.impl.HomeRepoImpl;
+import org.ucsf.glv.webapp.repository.impl.SOM_BFA_UserPreferencesImpl;
+import org.ucsf.glv.webapp.repository.impl.vw_Get_DeparmentsImpl;
 import org.ucsf.glv.webapp.service.glverification.DashboardService;
 import org.ucsf.glv.webapp.service.glverification.ReviewAndVerifyPayrollService;
 import org.ucsf.glv.webapp.service.glverification.ReviewAndVerifyTransactionsService;
@@ -26,6 +30,9 @@ public class GuiceModule extends AbstractModule {
         bind(Jdbc.class).toInstance(new Jdbc());
         bind(ObjectMapper.class).toInstance(new ObjectMapper());
         bind(ConvertData.class).toInstance(new ConvertData());
+        
+        bind(SOM_BFA_UserPreferences.class).to(SOM_BFA_UserPreferencesImpl.class);
+        bind(vw_Get_Deparments.class).to(vw_Get_DeparmentsImpl.class);
 
         bind(HomeRepo.class).to(HomeRepoImpl.class);
         bind(HomeService.class).toInstance(new HomeService());

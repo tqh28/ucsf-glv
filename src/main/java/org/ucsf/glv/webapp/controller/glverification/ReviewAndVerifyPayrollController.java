@@ -13,27 +13,27 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.ucsf.glv.webapp.service.glverification.ReviewAndVerifyPayrollService;
 
 
-@Path("/gl-verification/review-and-verify-payroll")
+@Path("gl-verification/review-and-verify-payroll")
 public class ReviewAndVerifyPayrollController {
 
     @Inject
     private ReviewAndVerifyPayrollService reviewAndVerifyPayrollService;
     
-    @Path("/get-payroll-data")
+    @Path("get-payroll-data")
     @GET
     public String getPayrollData(@QueryParam("deptId") String deptId, @QueryParam("businessUnit") String businessUnit,
             @QueryParam("fy") String fy, @QueryParam("fp") String fp) throws SQLException, JsonGenerationException, JsonMappingException, IOException {
         return reviewAndVerifyPayrollService.getPayrollData(deptId, businessUnit, fy, fp);
     }
 
-    @Path("/get-payroll-fet-data")
+    @Path("get-payroll-fet-data")
     @GET
     public String getPayrollFETData(@QueryParam("sessionUserId") String sessionUserId, @QueryParam("fy") int fy)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
         return reviewAndVerifyPayrollService.getPayrollFTEData(sessionUserId, fy);
     }
 
-    @Path("/get-payroll-expense-data")
+    @Path("get-payroll-expense-data")
     @GET
     public String getPayrollExpenseData(@QueryParam("sessionUserId") String sessionUserId,
             @QueryParam("empName") String empName, @QueryParam("start") int start, @QueryParam("length") int length)

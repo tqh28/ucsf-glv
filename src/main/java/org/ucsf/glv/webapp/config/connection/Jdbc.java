@@ -6,14 +6,13 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/**
- * connect database using jdbc
- */
+import javax.inject.Singleton;
+
+@Singleton
 public class Jdbc {
+    private Connection connection;
 
-    private static Connection connection;
-
-    static {
+    public Jdbc() {
         try {
             Class.forName(DatabaseCredentials.DRIVER);
             connection = DriverManager.getConnection(DatabaseCredentials.URL, DatabaseCredentials.USER,
@@ -23,7 +22,7 @@ public class Jdbc {
         }
     }
 
-    public static Statement getStatement() {
+    public Statement getStatement() {
         try {
             return connection.createStatement();
         } catch (SQLException e) {
@@ -32,12 +31,16 @@ public class Jdbc {
         }
     }
     
-    public static PreparedStatement getPrepareStatement(String sql) {
+    public PreparedStatement getPrepareStatement(String sql) {
         try {
             return connection.prepareStatement(sql);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
+    }
+    
+    public String test() {
+        return "jdbc";
     }
 }

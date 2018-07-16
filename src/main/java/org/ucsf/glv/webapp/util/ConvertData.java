@@ -15,7 +15,7 @@ public class ConvertData {
      * @param rs
      * @return result set in json mode
      */
-    public static String convertResultSetToJson(ResultSet rs) {
+    public String convertResultSetToJson(ResultSet rs) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.writeValueAsString(convertResultSetToListHashMap(rs));
@@ -25,7 +25,7 @@ public class ConvertData {
         }
     }
 
-    public static List<HashMap<String, Object>> convertResultSetToListHashMap(ResultSet rs) {
+    public List<HashMap<String, Object>> convertResultSetToListHashMap(ResultSet rs) {
         List<HashMap<String, Object>> returnList = new LinkedList<HashMap<String, Object>>();
         ResultSetMetaData rsmd;
         try {
@@ -49,7 +49,7 @@ public class ConvertData {
      * @param rs
      * @return the number of records in select count(*) query
      */
-    public static int getNumberOfSelectCountQuery(ResultSet rs) {
+    public int getNumberOfSelectCountQuery(ResultSet rs) {
         ResultSetMetaData rsmd;
         try {
             rsmd = rs.getMetaData();

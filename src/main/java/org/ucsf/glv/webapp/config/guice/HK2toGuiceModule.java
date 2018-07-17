@@ -5,6 +5,7 @@ import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.ucsf.glv.webapp.service.glverification.DashboardService;
 import org.ucsf.glv.webapp.service.glverification.ReviewAndVerifyPayrollService;
 import org.ucsf.glv.webapp.service.glverification.ReviewAndVerifyTransactionsService;
+import org.ucsf.glv.webapp.service.glverification.TopMenuService;
 import org.ucsf.glv.webapp.service.glvhome.HomeService;
 
 import com.google.inject.Injector;;
@@ -19,10 +20,13 @@ public class HK2toGuiceModule extends AbstractBinder {
 
     @Override
     protected void configure() {
+        bindFactory(new ServiceFactory<HomeService>(guiceInjector, HomeService.class)).to(HomeService.class);
+        
+        bindFactory(new ServiceFactory<TopMenuService>(guiceInjector, TopMenuService.class)).to(TopMenuService.class);
         bindFactory(new ServiceFactory<DashboardService>(guiceInjector, DashboardService.class)).to(DashboardService.class);
         bindFactory(new ServiceFactory<ReviewAndVerifyPayrollService>(guiceInjector, ReviewAndVerifyPayrollService.class)).to(ReviewAndVerifyPayrollService.class);
         bindFactory(new ServiceFactory<ReviewAndVerifyTransactionsService>(guiceInjector, ReviewAndVerifyTransactionsService.class)).to(ReviewAndVerifyTransactionsService.class);
-        bindFactory(new ServiceFactory<HomeService>(guiceInjector, HomeService.class)).to(HomeService.class);
+        
     }
 
     private static class ServiceFactory<T> implements Factory<T> {

@@ -23,7 +23,7 @@ public class HomeService {
 
     @Inject
     private SOM_BFA_UserPreferences userPreference;
-    
+
     @Inject
     private vw_Get_Deparments getDepartmentsView;
 
@@ -35,18 +35,35 @@ public class HomeService {
         return mapper.writeValueAsString(departmentsView.getControlPointList());
     }
 
-    public String getListRollUpData(String sessionUserId) throws SQLException, JsonGenerationException, JsonMappingException, IOException {
+    public String getListRollUpData(String sessionUserId)
+            throws SQLException, JsonGenerationException, JsonMappingException, IOException {
         List<HashMap<String, Object>> userPreferenceDataList = userPreference.getPreferenceByUserId(sessionUserId);
-        
+
         String controlPointDefault = null;
-        for (HashMap<String, Object> data: userPreferenceDataList) {
+        for (HashMap<String, Object> data : userPreferenceDataList) {
             if (data.get("Preference") != null && data.get("Preference").equals("Default ControlPoint")) {
                 controlPointDefault = (String) data.get("String");
             }
         }
-        
+
         List<HashMap<String, Object>> departmentList = getDepartmentsView.getListRollUpByDeptId(controlPointDefault);
         return mapper.writeValueAsString(departmentList);
+    }
+
+    public String getDefaultDeptData(String sessionUserId) throws SQLException, JsonGenerationException, JsonMappingException, IOException {
+        List<HashMap<String, Object>> userPreferenceDataList = userPreference.getPreferenceByUserId(sessionUserId);
+
+        String defaultDeptData = null;
+        for (HashMap<String, Object> data : userPreferenceDataList) {
+            if (data.get("Preference") != null && data.get("Preference").equals("Default Deptid")) {
+                defaultDeptData = (String) data.get("String");
+            }
+        }
+        
+        HashMap<String, String> deptData = new HashMap<>();
+        deptData.put("defaultDeptId", defaultDeptData);
+
+        return mapper.writeValueAsString(deptData);
     }
 
 }

@@ -1,5 +1,6 @@
 package org.ucsf.glv.webapp.repository.impl;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -32,6 +33,33 @@ public class vw_COA_SOM_DepartmentsImpl implements vw_COA_SOM_Departments {
 
         rs.close();
         statement.close();
+        return result;
+    }
+
+    @Override
+    public List<HashMap<String, Object>> getListDepartmentByDeptId(String deptId) throws SQLException {
+        StringBuilder sql = new StringBuilder(
+                "SELECT DeptTreeTitleAbbrev, DeptCd FROM vw_COA_SOM_Departments WHERE Deptcd <>'------' ");
+        PreparedStatement preparedStatement = null;
+        if (deptId != null && !deptId.equals("")) {
+            sql.append(
+                    "AND (DeptLevel1Cd = ? OR DeptLevel2Cd = ? OR DeptLevel3Cd = ? OR DeptLevel4Cd = ? OR DeptLevel5Cd = ? OR DeptLevel6Cd = ?) ORDER BY depttreecd");
+            preparedStatement = jdbc.getPrepareStatement(sql.toString());
+            preparedStatement.setString(1, deptId);
+            preparedStatement.setString(2, deptId);
+            preparedStatement.setString(3, deptId);
+            preparedStatement.setString(4, deptId);
+            preparedStatement.setString(5, deptId);
+            preparedStatement.setString(6, deptId);
+        } else {
+            preparedStatement = jdbc.getPrepareStatement(sql.toString());
+        }
+        ResultSet rs = preparedStatement.executeQuery();
+        List<HashMap<String, Object>> result = convertData.convertResultSetToListHashMap(rs);
+
+        rs.close();
+        preparedStatement.close();
+
         return result;
     }
 

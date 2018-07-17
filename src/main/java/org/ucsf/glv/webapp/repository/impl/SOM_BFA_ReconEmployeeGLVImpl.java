@@ -130,7 +130,7 @@ public class SOM_BFA_ReconEmployeeGLVImpl implements SOM_BFA_ReconEmployeeGLV {
         }
 
         ResultSet rs = preparedStatement.executeQuery();
-        int totalRecords = convertData.getNumberOfSelectCountQuery(rs);
+        int totalRecords = (int) convertData.getObjectFromResultSet(rs);
 
         rs.close();
         preparedStatement.close();

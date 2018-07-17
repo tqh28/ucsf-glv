@@ -46,23 +46,40 @@ public class ConvertData {
     }
 
     /**
-     * @param rs
+     * @param rs, rs must have only ONE ROW and this row must have only ONE COLUMN
      * @return the number of records in select count(*) query
      */
-    public int getNumberOfSelectCountQuery(ResultSet rs) {
+    public Object getObjectFromResultSet(ResultSet rs) {
         ResultSetMetaData rsmd;
         try {
             rsmd = rs.getMetaData();
             if (rs.next()) {
                 String columnName = rsmd.getColumnName(1);
-                return rs.getInt(columnName);
+                return rs.getObject(columnName);
             } else {
-                return 0;
+                return null;
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return 0;
+            return null;
         }
-
+    }
+    
+    /**
+     * @param rs, rs must have only ONE row
+     * @param columnName
+     * @return data of column name
+     */
+    public Object getObjectByColumnNameFromResultSet(ResultSet rs, String columnName) {
+        try {
+            if (rs.next()) {
+                return rs.getObject(columnName);
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

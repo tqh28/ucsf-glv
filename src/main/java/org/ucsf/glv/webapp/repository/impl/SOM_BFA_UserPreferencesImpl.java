@@ -35,4 +35,16 @@ public class SOM_BFA_UserPreferencesImpl implements SOM_BFA_UserPreferences {
         return result;
     }
 
+    @Override
+    public String getDefaultDeptIdByUserId(String userId) throws SQLException {
+        String sql = "SELECT string FROM SOM_BFA_UserPreferences WHERE UserId= ? AND Preference= 'Default Deptid'";
+        PreparedStatement preparedStatement = jdbc.getPrepareStatement(sql);
+        preparedStatement.setString(1, userId);
+        
+        ResultSet rs = preparedStatement.executeQuery();
+        String defaultDeptId = (String) convertData.getObjectByColumnNameFromResultSet(rs, "string");
+        
+        return defaultDeptId;
+    }
+
 }

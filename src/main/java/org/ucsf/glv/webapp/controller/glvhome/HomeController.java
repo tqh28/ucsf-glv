@@ -24,12 +24,19 @@ public class HomeController {
             throws JsonGenerationException, JsonMappingException, IOException, SQLException {
         return homeService.getControlPointList();
     }
-    
+
     @GET
     @Path("get-list-roll-up-data")
     public String getListRollUpData(@QueryParam("sessionUserId") String sessionUserId)
             throws JsonGenerationException, JsonMappingException, SQLException, IOException {
         return homeService.getListRollUpData(sessionUserId);
+    }
+
+    @GET
+    @Path("get-default-dept-data")
+    public String getDefaultDeptData(@QueryParam("sessionUserId") String sessionUserId)
+            throws SQLException, JsonGenerationException, JsonMappingException, IOException {
+        return homeService.getDefaultDeptData(sessionUserId);
     }
 
 }

@@ -24,4 +24,11 @@ public class DashboardController {
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
         return dashboardService.getDashboardData(sessionUserId);
     }
+
+    @GET
+    @Path("get-monthly-trend-percent")
+    public String getMonthlyTrendPercent(@QueryParam("deptId") String deptId, @QueryParam("fy") int fy,
+            @QueryParam("fp") int fp) throws JsonGenerationException, JsonMappingException, SQLException, IOException {
+        return dashboardService.getMonthlyTrendPercent(deptId, fy, fp);
+    }
 }

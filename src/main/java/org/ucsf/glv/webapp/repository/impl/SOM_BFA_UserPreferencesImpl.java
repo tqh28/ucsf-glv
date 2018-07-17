@@ -21,7 +21,7 @@ public class SOM_BFA_UserPreferencesImpl implements SOM_BFA_UserPreferences {
     private ConvertData convertData;
     
     @Override
-    public List<HashMap<String, Object>> findByUserId(String userId) throws SQLException {
+    public List<HashMap<String, Object>> getPreferenceByUserId(String userId) throws SQLException {
         String sql = "SELECT Preference, String FROM SOM_BFA_UserPreferences WHERE UserId = ?";
         PreparedStatement preparedStatement = jdbc.getPrepareStatement(sql);
         preparedStatement.setString(1, userId);

@@ -1,4 +1,4 @@
-package org.ucsf.glv.webapp.repository.glvhome.impl;
+package org.ucsf.glv.webapp.repository.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,16 +7,16 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.ucsf.glv.webapp.config.connection.Jdbc;
-import org.ucsf.glv.webapp.repository.glvhome.HomeRepo;
+import org.ucsf.glv.webapp.repository.vw_COA_SOM_Departments;
 import org.ucsf.glv.webapp.util.ConvertData;
 
 import com.google.inject.Inject;
 
-public class HomeRepoImpl implements HomeRepo {
+public class vw_COA_SOM_DepartmentsImpl implements vw_COA_SOM_Departments {
 
     @Inject
     private Jdbc jdbc;
-    
+
     @Inject
     private ConvertData convertData;
 

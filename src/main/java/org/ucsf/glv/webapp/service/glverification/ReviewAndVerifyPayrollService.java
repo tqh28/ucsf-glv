@@ -2,12 +2,13 @@ package org.ucsf.glv.webapp.service.glverification;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.ucsf.glv.webapp.repository.glverification.ReviewAndVerifyPayrollRepo;
-import org.ucsf.glv.webapp.service.glverification.ReviewAndVerifyPayrollService;
+import org.ucsf.glv.webapp.repository.SOM_BFA_ReconEmployeeGLV;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -16,7 +17,7 @@ import com.google.inject.Singleton;
 public class ReviewAndVerifyPayrollService {
 
     @Inject
-    private ReviewAndVerifyPayrollRepo reviewAndVerifyPayrollRepo;
+    private SOM_BFA_ReconEmployeeGLV reconEmployee;
 
     @Inject
     private ObjectMapper mapper;
@@ -24,17 +25,24 @@ public class ReviewAndVerifyPayrollService {
     public String getPayrollData(String deptId, String businessUnit, String fiscalYear, String fiscalMonth)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
         return mapper.writeValueAsString(
-                reviewAndVerifyPayrollRepo.getPayrollData(deptId, businessUnit, fiscalYear, fiscalMonth));
+                reconEmployee.getVerifyPayroll(deptId, businessUnit, fiscalYear, fiscalMonth));
     }
 
     public String getPayrollFTEData(String sessionUserId, int fiscalYear)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
-        return mapper.writeValueAsString(reviewAndVerifyPayrollRepo.getPayrollFTEData(sessionUserId, fiscalYear));
+        return mapper.writeValueAsString(reconEmployee.getListCategorySumary(sessionUserId, fiscalYear));
     }
 
     public String getPayrollExpenseData(String sessionUserId, String empName, int start, int length)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
-        return mapper.writeValueAsString(
-                reviewAndVerifyPayrollRepo.getPayrollExpenseData(sessionUserId, empName, start, length));
+        List<HashMap<String, Object>> data = reconEmployee.getExpenseDetail(sessionUserId, empName, start, length);
+        int totalRecords = reconEmployee.countExpenseDetail(sessionUserId, empName, start, length);
+        
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("data", data);
+        resultMap.put("recordsTotal", totalRecords);
+        resultMap.put("recordsFiltered", totalRecords);
+        
+        return mapper.writeValueAsString(resultMap);
     }
 }

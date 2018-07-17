@@ -21,7 +21,7 @@ public class vw_Get_DeparmentsImpl implements vw_Get_Deparments {
     private ConvertData converData;
 
     @Override
-    public List<HashMap<String, Object>> findListRollUpByDeptId(String deptId) throws SQLException {
+    public List<HashMap<String, Object>> getListRollUpByDeptId(String deptId) throws SQLException {
         StringBuilder sql = new StringBuilder("SELECT DeptTreeTitleAbbrev, DeptCd ")
                 .append("FROM vw_Get_Deparments ")
                 .append("WHERE DeptLevel1Cd LIKE ? OR DeptLevel2Cd LIKE ? ")

@@ -1,4 +1,4 @@
-package org.ucsf.glv.webapp.repository.glverification.impl;
+package org.ucsf.glv.webapp.repository.impl;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -10,12 +10,12 @@ import java.util.List;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.ucsf.glv.webapp.config.connection.Jdbc;
-import org.ucsf.glv.webapp.repository.glverification.ReviewAndVerifyPayrollRepo;
+import org.ucsf.glv.webapp.repository.SOM_BFA_ReconEmployeeGLV;
 import org.ucsf.glv.webapp.util.ConvertData;
 
 import com.google.inject.Inject;
 
-public class ReviewAndVerifyPayrollRepoImpl implements ReviewAndVerifyPayrollRepo {
+public class SOM_BFA_ReconEmployeeGLVImpl implements SOM_BFA_ReconEmployeeGLV {
 
     @Inject
     private Jdbc jdbc;
@@ -23,7 +23,8 @@ public class ReviewAndVerifyPayrollRepoImpl implements ReviewAndVerifyPayrollRep
     @Inject
     private ConvertData convertData;
 
-    public List<HashMap<String, Object>> getPayrollData(String deptId, String businessUnit, String fiscalYear,
+    @Override
+    public List<HashMap<String, Object>> getVerifyPayroll(String deptId, String businessUnit, String fiscalYear,
             String fiscalMonth) throws SQLException {
         StringBuilder sql = new StringBuilder(
                 "SELECT uniqueid, PositionTitleCategory, Employee_Id, Employee_name, ReconComment, DeptCd, FundCd, ProjectCd, FunctionCd, FlexCd, DeptSite, PlanTitleCdTitle, ReconUser, ReconDate, S05_Nov, ReconStatusCd ")
@@ -50,8 +51,9 @@ public class ReviewAndVerifyPayrollRepoImpl implements ReviewAndVerifyPayrollRep
         return result;
     }
 
-    public List<HashMap<String, Object>> getPayrollFTEData(String sessionUserId, int fiscalYear) throws SQLException {
-
+    @Override
+    public List<HashMap<String, Object>> getListCategorySumary(String sessionUserId, int fiscalYear)
+            throws SQLException {
         StringBuilder sql = new StringBuilder(
                 "SELECT ISNULL(PositionTitleCategory, 'Total') AS PositionTitleCategory, ").append(
                         "SUM(FTEM01) AS FTEM01,SUM(FTEM02) AS FTEM02,SUM(FTEM03) AS FTEM03,SUM(FTEM04) AS FTEM04, ")
@@ -76,9 +78,9 @@ public class ReviewAndVerifyPayrollRepoImpl implements ReviewAndVerifyPayrollRep
         return result;
     }
 
-    public HashMap<String, Object> getPayrollExpenseData(String sessionUserId, String empName, int start, int length)
+    @Override
+    public List<HashMap<String, Object>> getExpenseDetail(String sessionUserId, String empName, int start, int length)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
-
         StringBuilder whereCondition = new StringBuilder("SessionUserid = ? ");
         boolean isEmpNameNull = true;
         if (empName != null && !empName.isEmpty()) {
@@ -86,41 +88,54 @@ public class ReviewAndVerifyPayrollRepoImpl implements ReviewAndVerifyPayrollRep
             whereCondition.append("AND Employee_Name = ? ");
         }
 
-        StringBuilder countSql = new StringBuilder("SELECT COUNT(*) AS numrows FROM SOM_AA_EmployeeListRolling WHERE ")
-                .append(whereCondition);
-
-        StringBuilder dataSql = new StringBuilder(
+        StringBuilder sql = new StringBuilder(
                 "SELECT uniqueid, PositionTitleCategory, Employee_Name, Employee_Id, RecType, DeptCd, FundCd, ProjectCd, FunctionCd, FlexCd, PositionTitleCd, EmpChanged, M01, M02, M03, M04, M05, M06, M07, M08, M09, M10, M11, M12 ")
                         .append("FROM SOM_AA_EmployeeListRolling ").append("WHERE ").append(whereCondition)
                         .append("ORDER by PositionTitleCategory, Employee_Name, Sort1, Sort2, PositionTitleCd, DeptCd, FundCd, ProjectCd, FunctionCd, FlexCd ");
         if (length != 0) {
-            dataSql.append(String.format("OFFSET %d ROWS FETCH NEXT %d ROWS ONLY", start, length));
+            sql.append(String.format("OFFSET %d ROWS FETCH NEXT %d ROWS ONLY", start, length));
         }
-        PreparedStatement dataSqlStatement = jdbc.getPrepareStatement(dataSql.toString());
-        PreparedStatement countSqlStatement = jdbc.getPrepareStatement(countSql.toString());
-        dataSqlStatement.setString(1, sessionUserId);
-        countSqlStatement.setString(1, sessionUserId);
+        PreparedStatement preparedStatement = jdbc.getPrepareStatement(sql.toString());
+        preparedStatement.setString(1, sessionUserId);
         if (!isEmpNameNull) {
-            dataSqlStatement.setString(2, empName);
-            countSqlStatement.setString(2, empName);
+            preparedStatement.setString(2, empName);
         }
 
-        ResultSet dataResultSet = dataSqlStatement.executeQuery();
-        List<HashMap<String, Object>> dataHashMapList = convertData.convertResultSetToListHashMap(dataResultSet);
+        ResultSet rs = preparedStatement.executeQuery();
+        List<HashMap<String, Object>> result = convertData.convertResultSetToListHashMap(rs);
 
-        ResultSet countResultSet = countSqlStatement.executeQuery();
-        int totalRecords = convertData.getNumberOfSelectCountQuery(countResultSet);
-
-        dataResultSet.close();
-        countResultSet.close();
-        dataSqlStatement.close();
-        countSqlStatement.close();
-
-        HashMap<String, Object> result = new HashMap<String, Object>();
-        result.put("data", dataHashMapList);
-        result.put("recordsTotal", totalRecords);
-        result.put("recordsFiltered", totalRecords);
+        rs.close();
+        preparedStatement.close();
 
         return result;
     }
+
+    @Override
+    public int countExpenseDetail(String sessionUserId, String empName, int start, int length)
+            throws SQLException, JsonGenerationException, JsonMappingException, IOException {
+        StringBuilder whereCondition = new StringBuilder("SessionUserid = ? ");
+        boolean isEmpNameNull = true;
+        if (empName != null && !empName.isEmpty()) {
+            isEmpNameNull = false;
+            whereCondition.append("AND Employee_Name = ? ");
+        }
+
+        StringBuilder sql = new StringBuilder("SELECT COUNT(*) AS numrows FROM SOM_AA_EmployeeListRolling WHERE ")
+                .append(whereCondition);
+
+        PreparedStatement preparedStatement = jdbc.getPrepareStatement(sql.toString());
+        preparedStatement.setString(1, sessionUserId);
+        if (!isEmpNameNull) {
+            preparedStatement.setString(2, empName);
+        }
+
+        ResultSet rs = preparedStatement.executeQuery();
+        int totalRecords = convertData.getNumberOfSelectCountQuery(rs);
+
+        rs.close();
+        preparedStatement.close();
+
+        return totalRecords;
+    }
+
 }

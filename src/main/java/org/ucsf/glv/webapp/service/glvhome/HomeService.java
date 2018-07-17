@@ -9,8 +9,8 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.ucsf.glv.webapp.repository.SOM_BFA_UserPreferences;
+import org.ucsf.glv.webapp.repository.vw_COA_SOM_Departments;
 import org.ucsf.glv.webapp.repository.vw_Get_Deparments;
-import org.ucsf.glv.webapp.repository.glvhome.HomeRepo;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -19,7 +19,7 @@ import com.google.inject.Singleton;
 public class HomeService {
 
     @Inject
-    private HomeRepo homeRepo;
+    private vw_COA_SOM_Departments departmentsView;
 
     @Inject
     private SOM_BFA_UserPreferences userPreference;
@@ -32,11 +32,11 @@ public class HomeService {
 
     public String getControlPointList()
             throws JsonGenerationException, JsonMappingException, IOException, SQLException {
-        return mapper.writeValueAsString(homeRepo.getControlPointList());
+        return mapper.writeValueAsString(departmentsView.getControlPointList());
     }
 
     public String getListRollUpData(String sessionUserId) throws SQLException, JsonGenerationException, JsonMappingException, IOException {
-        List<HashMap<String, Object>> userPreferenceDataList = userPreference.findByUserId(sessionUserId);
+        List<HashMap<String, Object>> userPreferenceDataList = userPreference.getPreferenceByUserId(sessionUserId);
         
         String controlPointDefault = null;
         for (HashMap<String, Object> data: userPreferenceDataList) {
@@ -45,7 +45,7 @@ public class HomeService {
             }
         }
         
-        List<HashMap<String, Object>> departmentList = getDepartmentsView.findListRollUpByDeptId(controlPointDefault);
+        List<HashMap<String, Object>> departmentList = getDepartmentsView.getListRollUpByDeptId(controlPointDefault);
         return mapper.writeValueAsString(departmentList);
     }
 

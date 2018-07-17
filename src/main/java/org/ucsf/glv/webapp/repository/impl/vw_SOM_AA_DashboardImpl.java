@@ -1,4 +1,4 @@
-package org.ucsf.glv.webapp.repository.glverification.impl;
+package org.ucsf.glv.webapp.repository.impl;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -10,12 +10,12 @@ import java.util.List;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.ucsf.glv.webapp.config.connection.Jdbc;
-import org.ucsf.glv.webapp.repository.glverification.DashboardRepo;
+import org.ucsf.glv.webapp.repository.vw_SOM_AA_Dashboard;
 import org.ucsf.glv.webapp.util.ConvertData;
 
 import com.google.inject.Inject;
 
-public class DashboardRepoImpl implements DashboardRepo {
+public class vw_SOM_AA_DashboardImpl implements vw_SOM_AA_Dashboard {
 
     @Inject
     private Jdbc jdbc;

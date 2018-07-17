@@ -2,18 +2,18 @@ package org.ucsf.glv.webapp.config.guice;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.ucsf.glv.webapp.config.connection.Jdbc;
+import org.ucsf.glv.webapp.repository.SOM_AA_TransactionSummary;
+import org.ucsf.glv.webapp.repository.SOM_BFA_ReconEmployeeGLV;
 import org.ucsf.glv.webapp.repository.SOM_BFA_UserPreferences;
+import org.ucsf.glv.webapp.repository.vw_COA_SOM_Departments;
 import org.ucsf.glv.webapp.repository.vw_Get_Deparments;
-import org.ucsf.glv.webapp.repository.glverification.DashboardRepo;
-import org.ucsf.glv.webapp.repository.glverification.ReviewAndVerifyPayrollRepo;
-import org.ucsf.glv.webapp.repository.glverification.ReviewAndVerifyTransactionsRepo;
-import org.ucsf.glv.webapp.repository.glverification.impl.DashboardRepoImpl;
-import org.ucsf.glv.webapp.repository.glverification.impl.ReviewAndVerifyPayrollRepoImpl;
-import org.ucsf.glv.webapp.repository.glverification.impl.ReviewAndVerifyTransactionsRepoImpl;
-import org.ucsf.glv.webapp.repository.glvhome.HomeRepo;
-import org.ucsf.glv.webapp.repository.glvhome.impl.HomeRepoImpl;
+import org.ucsf.glv.webapp.repository.vw_SOM_AA_Dashboard;
+import org.ucsf.glv.webapp.repository.impl.SOM_AA_TransactionSummaryImpl;
+import org.ucsf.glv.webapp.repository.impl.SOM_BFA_ReconEmployeeGLVImpl;
 import org.ucsf.glv.webapp.repository.impl.SOM_BFA_UserPreferencesImpl;
+import org.ucsf.glv.webapp.repository.impl.vw_COA_SOM_DepartmentsImpl;
 import org.ucsf.glv.webapp.repository.impl.vw_Get_DeparmentsImpl;
+import org.ucsf.glv.webapp.repository.impl.vw_SOM_AA_DashboardImpl;
 import org.ucsf.glv.webapp.service.glverification.DashboardService;
 import org.ucsf.glv.webapp.service.glverification.ReviewAndVerifyPayrollService;
 import org.ucsf.glv.webapp.service.glverification.ReviewAndVerifyTransactionsService;
@@ -34,16 +34,16 @@ public class GuiceModule extends AbstractModule {
         bind(SOM_BFA_UserPreferences.class).to(SOM_BFA_UserPreferencesImpl.class);
         bind(vw_Get_Deparments.class).to(vw_Get_DeparmentsImpl.class);
 
-        bind(HomeRepo.class).to(HomeRepoImpl.class);
+        bind(vw_COA_SOM_Departments.class).to(vw_COA_SOM_DepartmentsImpl.class);
         bind(HomeService.class).toInstance(new HomeService());
 
-        bind(DashboardRepo.class).to(DashboardRepoImpl.class);
+        bind(vw_SOM_AA_Dashboard.class).to(vw_SOM_AA_DashboardImpl.class);
         bind(DashboardService.class).toInstance(new DashboardService());
 
-        bind(ReviewAndVerifyPayrollRepo.class).to(ReviewAndVerifyPayrollRepoImpl.class);
+        bind(SOM_BFA_ReconEmployeeGLV.class).to(SOM_BFA_ReconEmployeeGLVImpl.class);
         bind(ReviewAndVerifyPayrollService.class).toInstance(new ReviewAndVerifyPayrollService());
 
-        bind(ReviewAndVerifyTransactionsRepo.class).to(ReviewAndVerifyTransactionsRepoImpl.class);
+        bind(SOM_AA_TransactionSummary.class).to(SOM_AA_TransactionSummaryImpl.class);
         bind(ReviewAndVerifyTransactionsService.class).toInstance(new ReviewAndVerifyTransactionsService());
     }
 

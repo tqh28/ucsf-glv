@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface vw_Get_Deparments {
 
-    public List<HashMap<String, Object>> findListRollUpByDeptId(String deptId) throws SQLException;
+    public List<HashMap<String, Object>> getListRollUpByDeptId(String deptId) throws SQLException;
 
 }

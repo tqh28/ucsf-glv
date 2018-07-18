@@ -44,4 +44,24 @@ public class SOM_BFA_SavedChartFieldFiltersImpl implements SOM_BFA_SavedChartFie
         return result;
     }
 
+    @Override
+    public List<HashMap<String, Object>> getDataForDllFilter(String filterId, String userId, String deptId)
+            throws SQLException {
+        StringBuilder sql = new StringBuilder("SELECT ChartStrField, ChartStrValue, \"Except\" ")
+                .append("FROM SOM_BFA_SavedChartFieldFilters ")
+                .append("WHERE UserId = ? AND DeptCdSaved = ? AND FilterName = ?");
+        PreparedStatement preparedStatement = jdbc.getPrepareStatement(sql.toString());
+        preparedStatement.setString(1, userId);
+        preparedStatement.setString(2, deptId);
+        preparedStatement.setString(3, filterId);
+
+        ResultSet rs = preparedStatement.executeQuery();
+        List<HashMap<String, Object>> result = convertData.convertResultSetToListHashMap(rs);
+
+        rs.close();
+        preparedStatement.close();
+
+        return result;
+    }
+
 }

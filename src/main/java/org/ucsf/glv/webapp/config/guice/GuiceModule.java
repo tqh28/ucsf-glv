@@ -11,6 +11,7 @@ import org.ucsf.glv.webapp.repository.SOM_BFA_Variables;
 import org.ucsf.glv.webapp.repository.vw_COA_SOM_Departments;
 import org.ucsf.glv.webapp.repository.vw_Get_Deparments;
 import org.ucsf.glv.webapp.repository.vw_SOM_AA_Dashboard;
+import org.ucsf.glv.webapp.repository.vw_SOM_BFA_ReconGroups;
 import org.ucsf.glv.webapp.repository.impl.SOM_AA_TransactionSummaryImpl;
 import org.ucsf.glv.webapp.repository.impl.SOM_BFA_ReconApproveTrendImpl;
 import org.ucsf.glv.webapp.repository.impl.SOM_BFA_ReconEmployeeGLVImpl;
@@ -20,6 +21,7 @@ import org.ucsf.glv.webapp.repository.impl.SOM_BFA_VariablesImpl;
 import org.ucsf.glv.webapp.repository.impl.vw_COA_SOM_DepartmentsImpl;
 import org.ucsf.glv.webapp.repository.impl.vw_Get_DeparmentsImpl;
 import org.ucsf.glv.webapp.repository.impl.vw_SOM_AA_DashboardImpl;
+import org.ucsf.glv.webapp.repository.impl.vw_SOM_BFA_ReconGroupsImpl;
 import org.ucsf.glv.webapp.service.glverification.DashboardService;
 import org.ucsf.glv.webapp.service.glverification.EditMyFilterService;
 import org.ucsf.glv.webapp.service.glverification.ReviewAndVerifyPayrollService;
@@ -47,6 +49,7 @@ public class GuiceModule extends AbstractModule {
         bind(vw_COA_SOM_Departments.class).to(vw_COA_SOM_DepartmentsImpl.class);
         bind(vw_Get_Deparments.class).to(vw_Get_DeparmentsImpl.class);
         bind(vw_SOM_AA_Dashboard.class).to(vw_SOM_AA_DashboardImpl.class);
+        bind(vw_SOM_BFA_ReconGroups.class).to(vw_SOM_BFA_ReconGroupsImpl.class);
 
         bind(HomeService.class).toInstance(new HomeService());
         bind(TopMenuService.class).toInstance(new TopMenuService());

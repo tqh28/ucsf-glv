@@ -17,11 +17,19 @@ public class EditMyFilterController {
 
     @Inject
     private EditMyFilterService editMyFilterService;
-    
+
     @GET
     @Path("get-filter-list")
     public String getFilterList(@QueryParam("userId") String userId, @QueryParam("deptId") String deptId)
             throws JsonGenerationException, JsonMappingException, IOException, SQLException {
         return editMyFilterService.getFilterList(userId, deptId);
+    }
+
+    @GET
+    @Path("get-filter-data")
+    public String getFilterData(@QueryParam("filterId") String filterId, @QueryParam("userId") String userId,
+            @QueryParam("deptId") String deptId)
+            throws JsonGenerationException, JsonMappingException, SQLException, IOException {
+        return editMyFilterService.getFilterData(filterId, userId, deptId);
     }
 }

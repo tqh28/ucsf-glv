@@ -46,14 +46,15 @@ public class ConvertData {
     }
 
     /**
-     * @param rs, rs must have only ONE ROW and this row must have only ONE COLUMN
+     * @param rs,
+     *            rs must have only ONE ROW and this row must have only ONE COLUMN
      * @return the number of records in select count(*) query
      */
     public Object getObjectFromResultSet(ResultSet rs) {
-        ResultSetMetaData rsmd;
         try {
-            rsmd = rs.getMetaData();
             if (rs.next()) {
+                ResultSetMetaData rsmd;
+                rsmd = rs.getMetaData();
                 String columnName = rsmd.getColumnName(1);
                 return rs.getObject(columnName);
             } else {
@@ -64,9 +65,10 @@ public class ConvertData {
             return null;
         }
     }
-    
+
     /**
-     * @param rs, rs must have only ONE row
+     * @param rs,
+     *            rs must have only ONE row
      * @param columnName
      * @return data of column name
      */

@@ -7,12 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.ucsf.glv.webapp.config.connection.Jdbc;
-import org.ucsf.glv.webapp.repository.vw_Get_Deparments;
+import org.ucsf.glv.webapp.repository.VW_Get_Deparments;
 import org.ucsf.glv.webapp.util.ConvertData;
 
 import com.google.inject.Inject;
 
-public class vw_Get_DeparmentsImpl implements vw_Get_Deparments {
+public class VW_Get_DeparmentsImpl implements VW_Get_Deparments {
     
     @Inject
     private Jdbc jdbc;

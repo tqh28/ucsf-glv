@@ -8,12 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.ucsf.glv.webapp.config.connection.Jdbc;
-import org.ucsf.glv.webapp.repository.vw_COA_SOM_Departments;
+import org.ucsf.glv.webapp.repository.VW_COA_SOM_Departments;
 import org.ucsf.glv.webapp.util.ConvertData;
 
 import com.google.inject.Inject;
 
-public class vw_COA_SOM_DepartmentsImpl implements vw_COA_SOM_Departments {
+public class VW_COA_SOM_DepartmentsImpl implements VW_COA_SOM_Departments {
 
     @Inject
     private Jdbc jdbc;

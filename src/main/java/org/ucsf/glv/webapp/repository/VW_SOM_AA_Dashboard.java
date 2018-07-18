@@ -8,7 +8,7 @@ import java.util.List;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 
-public interface vw_SOM_AA_Dashboard {
+public interface VW_SOM_AA_Dashboard {
 
     public List<HashMap<String, Object>> getDashboardData(String userId)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException;

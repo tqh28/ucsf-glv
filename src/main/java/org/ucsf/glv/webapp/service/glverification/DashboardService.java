@@ -8,7 +8,7 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.ucsf.glv.webapp.repository.SOM_BFA_ReconApproveTrend;
-import org.ucsf.glv.webapp.repository.vw_SOM_AA_Dashboard;
+import org.ucsf.glv.webapp.repository.VW_SOM_AA_Dashboard;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -17,7 +17,7 @@ import com.google.inject.Singleton;
 public class DashboardService {
 
     @Inject
-    private vw_SOM_AA_Dashboard dashboard;
+    private VW_SOM_AA_Dashboard dashboard;
     
     @Inject
     private SOM_BFA_ReconApproveTrend reconApproveTrend;

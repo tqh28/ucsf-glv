@@ -10,7 +10,7 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.ucsf.glv.webapp.repository.SOM_BFA_SavedChartFieldFilters;
-import org.ucsf.glv.webapp.repository.vw_SOM_BFA_ReconGroups;
+import org.ucsf.glv.webapp.repository.VW_SOM_BFA_ReconGroups;
 
 import com.google.inject.Inject;
 
@@ -23,7 +23,7 @@ public class EditMyFilterService {
     private SOM_BFA_SavedChartFieldFilters savedChartFieldFilters;
 
     @Inject
-    private vw_SOM_BFA_ReconGroups reconGroups;
+    private VW_SOM_BFA_ReconGroups reconGroups;
 
     public String getFilterList(String userId, String deptId)
             throws JsonGenerationException, JsonMappingException, IOException, SQLException {

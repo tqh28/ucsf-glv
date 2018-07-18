@@ -5,12 +5,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.ucsf.glv.webapp.config.connection.Jdbc;
-import org.ucsf.glv.webapp.repository.vw_SOM_BFA_ReconGroups;
+import org.ucsf.glv.webapp.repository.VW_SOM_BFA_ReconGroups;
 import org.ucsf.glv.webapp.util.ConvertData;
 
 import com.google.inject.Inject;
 
-public class vw_SOM_BFA_ReconGroupsImpl implements vw_SOM_BFA_ReconGroups {
+public class VW_SOM_BFA_ReconGroupsImpl implements VW_SOM_BFA_ReconGroups {
 
     @Inject
     private ConvertData convertData;

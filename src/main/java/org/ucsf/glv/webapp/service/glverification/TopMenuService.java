@@ -12,7 +12,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.ucsf.glv.webapp.repository.SOM_BFA_UserPreferences;
 import org.ucsf.glv.webapp.repository.SOM_BFA_Variables;
-import org.ucsf.glv.webapp.repository.vw_COA_SOM_Departments;
+import org.ucsf.glv.webapp.repository.VW_COA_SOM_Departments;
 
 import com.google.inject.Inject;
 
@@ -22,7 +22,7 @@ public class TopMenuService {
     private SOM_BFA_UserPreferences userPreferences;
 
     @Inject
-    private vw_COA_SOM_Departments departments;
+    private VW_COA_SOM_Departments departments;
 
     @Inject
     private SOM_BFA_Variables variables;

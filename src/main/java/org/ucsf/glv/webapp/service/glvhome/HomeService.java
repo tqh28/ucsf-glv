@@ -9,8 +9,8 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.ucsf.glv.webapp.repository.SOM_BFA_UserPreferences;
-import org.ucsf.glv.webapp.repository.vw_COA_SOM_Departments;
-import org.ucsf.glv.webapp.repository.vw_Get_Deparments;
+import org.ucsf.glv.webapp.repository.VW_COA_SOM_Departments;
+import org.ucsf.glv.webapp.repository.VW_Get_Deparments;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -19,13 +19,13 @@ import com.google.inject.Singleton;
 public class HomeService {
 
     @Inject
-    private vw_COA_SOM_Departments departmentsView;
+    private VW_COA_SOM_Departments departmentsView;
 
     @Inject
     private SOM_BFA_UserPreferences userPreference;
 
     @Inject
-    private vw_Get_Deparments getDepartmentsView;
+    private VW_Get_Deparments getDepartmentsView;
 
     @Inject
     private ObjectMapper mapper;

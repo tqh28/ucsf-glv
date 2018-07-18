@@ -20,9 +20,9 @@ public class DashboardController {
 
     @GET
     @Path("get-dashboard-data")
-    public String getDashboardData(@QueryParam("sessionUserId") String sessionUserId)
+    public String getDashboardData(@QueryParam("userId") String userId)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
-        return dashboardService.getDashboardData(sessionUserId);
+        return dashboardService.getDashboardData(userId);
     }
 
     @GET

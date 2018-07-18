@@ -3,6 +3,7 @@ package org.ucsf.glv.webapp.config.guice;
 import org.glassfish.hk2.api.Factory;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.ucsf.glv.webapp.service.glverification.DashboardService;
+import org.ucsf.glv.webapp.service.glverification.EditMyFilterService;
 import org.ucsf.glv.webapp.service.glverification.ReviewAndVerifyPayrollService;
 import org.ucsf.glv.webapp.service.glverification.ReviewAndVerifyTransactionsService;
 import org.ucsf.glv.webapp.service.glverification.TopMenuService;
@@ -26,6 +27,7 @@ public class HK2toGuiceModule extends AbstractBinder {
         bindFactory(new ServiceFactory<DashboardService>(guiceInjector, DashboardService.class)).to(DashboardService.class);
         bindFactory(new ServiceFactory<ReviewAndVerifyPayrollService>(guiceInjector, ReviewAndVerifyPayrollService.class)).to(ReviewAndVerifyPayrollService.class);
         bindFactory(new ServiceFactory<ReviewAndVerifyTransactionsService>(guiceInjector, ReviewAndVerifyTransactionsService.class)).to(ReviewAndVerifyTransactionsService.class);
+        bindFactory(new ServiceFactory<EditMyFilterService>(guiceInjector, EditMyFilterService.class)).to(EditMyFilterService.class);
         
     }
 

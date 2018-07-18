@@ -20,8 +20,8 @@ public class ReviewAndVerifyTransactionsService {
     @Inject
     private ObjectMapper mapper;
 
-    public String getTransactionsData(String sessionUserId, String reconGroupTitle)
+    public String getTransactionsData(String userId, String reconGroupTitle)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
-        return mapper.writeValueAsString(transactionSummary.getReviewAndVerifyTransactions(sessionUserId, reconGroupTitle));
+        return mapper.writeValueAsString(transactionSummary.getReviewAndVerifyTransactions(userId, reconGroupTitle));
     }
 }

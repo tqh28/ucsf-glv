@@ -27,16 +27,16 @@ public class HomeController {
 
     @GET
     @Path("get-list-roll-up-data")
-    public String getListRollUpData(@QueryParam("sessionUserId") String sessionUserId)
+    public String getListRollUpData(@QueryParam("userId") String userId)
             throws JsonGenerationException, JsonMappingException, SQLException, IOException {
-        return homeService.getListRollUpData(sessionUserId);
+        return homeService.getListRollUpData(userId);
     }
 
     @GET
     @Path("get-default-dept-data")
-    public String getDefaultDeptData(@QueryParam("sessionUserId") String sessionUserId)
+    public String getDefaultDeptData(@QueryParam("userId") String userId)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
-        return homeService.getDefaultDeptData(sessionUserId);
+        return homeService.getDefaultDeptData(userId);
     }
 
 }

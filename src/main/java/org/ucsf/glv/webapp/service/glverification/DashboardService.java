@@ -25,9 +25,9 @@ public class DashboardService {
     @Inject
     private ObjectMapper mapper;
 
-    public String getDashboardData(String sessionUserId)
+    public String getDashboardData(String userId)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
-        String json = mapper.writeValueAsString(dashboard.getDashboardData(sessionUserId));
+        String json = mapper.writeValueAsString(dashboard.getDashboardData(userId));
         return json;
     }
     

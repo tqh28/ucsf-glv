@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface SOM_AA_TransactionSummary {
 
-    public List<HashMap<String, Object>> getReviewAndVerifyTransactions(String sessionUserId, String reconGroupTitle) throws SQLException;
+    public List<HashMap<String, Object>> getReviewAndVerifyTransactions(String userId, String reconGroupTitle) throws SQLException;
 
 }

@@ -35,9 +35,9 @@ public class HomeService {
         return mapper.writeValueAsString(departmentsView.getControlPointList());
     }
 
-    public String getListRollUpData(String sessionUserId)
+    public String getListRollUpData(String userId)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
-        List<HashMap<String, Object>> userPreferenceDataList = userPreference.getPreferenceByUserId(sessionUserId);
+        List<HashMap<String, Object>> userPreferenceDataList = userPreference.getPreferenceByUserId(userId);
 
         String controlPointDefault = null;
         for (HashMap<String, Object> data : userPreferenceDataList) {
@@ -50,8 +50,8 @@ public class HomeService {
         return mapper.writeValueAsString(departmentList);
     }
 
-    public String getDefaultDeptData(String sessionUserId) throws SQLException, JsonGenerationException, JsonMappingException, IOException {
-        List<HashMap<String, Object>> userPreferenceDataList = userPreference.getPreferenceByUserId(sessionUserId);
+    public String getDefaultDeptData(String userId) throws SQLException, JsonGenerationException, JsonMappingException, IOException {
+        List<HashMap<String, Object>> userPreferenceDataList = userPreference.getPreferenceByUserId(userId);
 
         String defaultDeptData = null;
         for (HashMap<String, Object> data : userPreferenceDataList) {

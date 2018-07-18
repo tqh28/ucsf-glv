@@ -28,15 +28,15 @@ public class ReviewAndVerifyPayrollService {
                 reconEmployee.getVerifyPayroll(deptId, businessUnit, fiscalYear, fiscalMonth));
     }
 
-    public String getPayrollFTEData(String sessionUserId, int fiscalYear)
+    public String getPayrollFTEData(String userId, int fiscalYear)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
-        return mapper.writeValueAsString(reconEmployee.getListCategorySumary(sessionUserId, fiscalYear));
+        return mapper.writeValueAsString(reconEmployee.getListCategorySumary(userId, fiscalYear));
     }
 
-    public String getPayrollExpenseData(String sessionUserId, String empName, int start, int length)
+    public String getPayrollExpenseData(String userId, String empName, int start, int length)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
-        List<HashMap<String, Object>> data = reconEmployee.getExpenseDetail(sessionUserId, empName, start, length);
-        int totalRecords = reconEmployee.countExpenseDetail(sessionUserId, empName, start, length);
+        List<HashMap<String, Object>> data = reconEmployee.getExpenseDetail(userId, empName, start, length);
+        int totalRecords = reconEmployee.countExpenseDetail(userId, empName, start, length);
         
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         resultMap.put("data", data);

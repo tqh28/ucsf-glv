@@ -24,7 +24,7 @@ public class vw_SOM_AA_DashboardImpl implements vw_SOM_AA_Dashboard {
     private ConvertData convertData;
 
     @Override
-    public List<HashMap<String, Object>> getDashboardData(String sessionUserId)
+    public List<HashMap<String, Object>> getDashboardData(String userId)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
 
         StringBuilder sql = new StringBuilder(
@@ -32,7 +32,7 @@ public class vw_SOM_AA_DashboardImpl implements vw_SOM_AA_Dashboard {
                         .append("FROM vw_SOM_AA_Dashboard ").append("WHERE SessionUserid = ? ")
                         .append("ORDER BY CASE WHEN ReconGroupTitle = 'Total' THEN 1 ELSE 0 END, ReconGroupTitle ASC");
         PreparedStatement prepareStatement = jdbc.getPrepareStatement(sql.toString());
-        prepareStatement.setString(1, sessionUserId);
+        prepareStatement.setString(1, userId);
 
         ResultSet rs = prepareStatement.executeQuery();
 

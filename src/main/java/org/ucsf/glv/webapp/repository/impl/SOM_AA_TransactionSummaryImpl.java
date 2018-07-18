@@ -20,7 +20,7 @@ public class SOM_AA_TransactionSummaryImpl implements SOM_AA_TransactionSummary 
     @Inject
     private ConvertData convertData;
 
-    public List<HashMap<String, Object>> getReviewAndVerifyTransactions(String sessionUserId, String reconGroupTitle)
+    public List<HashMap<String, Object>> getReviewAndVerifyTransactions(String userId, String reconGroupTitle)
             throws SQLException {
 
         StringBuilder sql = new StringBuilder("SELECT ReconItemCd, ReconGroupTitle, ReconItemTitle, NotVerified, Pending,Complete, AutoComplete, PriorNotVerified, PriorPending, NotVerifiedCount, PendingCount, CompleteCount, AutoCompleteCount, PriorNotVerifiedCount, PriorPendingCount, AmtM01x, AmtM02x, AmtM03x, AmtM04x, AmtM05x, AmtM06x, AmtM07x, AmtM08x, AmtM09x, AmtM10x, AmtM11x, AmtM12x, AmtTotx ")
@@ -30,11 +30,11 @@ public class SOM_AA_TransactionSummaryImpl implements SOM_AA_TransactionSummary 
         if (reconGroupTitle.equals("Total")) {
             sql.append("WHERE SessionUserid=? ORDER BY Sort1 asc, Sort2 ASC");
             prepareStatement = jdbc.getPrepareStatement(sql.toString());
-            prepareStatement.setString(1, sessionUserId);
+            prepareStatement.setString(1, userId);
         } else {
             sql.append("WHERE SessionUserid=? AND ReconGroupTitle=? ORDER BY Sort1 ASC, Sort2 ASC");
             prepareStatement = jdbc.getPrepareStatement(sql.toString());
-            prepareStatement.setString(1, sessionUserId);
+            prepareStatement.setString(1, userId);
             prepareStatement.setString(2, reconGroupTitle);
         }
 

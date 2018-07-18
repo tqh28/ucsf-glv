@@ -10,7 +10,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 
 public interface vw_SOM_AA_Dashboard {
 
-    public List<HashMap<String, Object>> getDashboardData(String sessionUserId)
+    public List<HashMap<String, Object>> getDashboardData(String userId)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException;
 
 }

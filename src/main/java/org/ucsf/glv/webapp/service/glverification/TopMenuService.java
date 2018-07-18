@@ -30,19 +30,19 @@ public class TopMenuService {
     @Inject
     private ObjectMapper mapper;
 
-    public String getTopMenuData(String sessionUserId, String deptId)
+    public String getTopMenuData(String userId, String deptId)
             throws JsonGenerationException, JsonMappingException, SQLException, IOException {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("deptList", getDeptIdList(sessionUserId, deptId));
+        map.put("deptList", getDeptIdList(userId, deptId));
         map.put("reportDate", getReportDate());
 
         return mapper.writeValueAsString(map);
     }
 
-    private HashMap<String, Object> getDeptIdList(String sessionUserId, String urlDeptId)
+    private HashMap<String, Object> getDeptIdList(String userId, String urlDeptId)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
         String deptId = null;
-        String defaultDeptId = userPreferences.getDefaultDeptIdByUserId(sessionUserId);
+        String defaultDeptId = userPreferences.getDefaultDeptIdByUserId(userId);
 
         List<HashMap<String, Object>> listDepartments = departments.getListDepartmentByDeptId(defaultDeptId);
 

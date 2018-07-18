@@ -20,9 +20,9 @@ public class ReviewAndVerifyTransactionsController {
 
     @GET
     @Path("get-transactions-data")
-    public String getTransactionsData(@QueryParam("sessionUserId") String sessionUserId,
+    public String getTransactionsData(@QueryParam("userId") String userId,
             @QueryParam("reconGroupTitle") String reconGroupTitle)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
-        return reviewAndVerifyTransactionsService.getTransactionsData(sessionUserId, reconGroupTitle);
+        return reviewAndVerifyTransactionsService.getTransactionsData(userId, reconGroupTitle);
     }
 }

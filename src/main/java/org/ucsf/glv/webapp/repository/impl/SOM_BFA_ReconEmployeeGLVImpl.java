@@ -52,7 +52,7 @@ public class SOM_BFA_ReconEmployeeGLVImpl implements SOM_BFA_ReconEmployeeGLV {
     }
 
     @Override
-    public List<HashMap<String, Object>> getListCategorySumary(String sessionUserId, int fiscalYear)
+    public List<HashMap<String, Object>> getListCategorySumary(String userId, int fiscalYear)
             throws SQLException {
         StringBuilder sql = new StringBuilder(
                 "SELECT ISNULL(PositionTitleCategory, 'Total') AS PositionTitleCategory, ").append(
@@ -66,7 +66,7 @@ public class SOM_BFA_ReconEmployeeGLVImpl implements SOM_BFA_ReconEmployeeGLV {
                         .append("WHERE SessionUserid = ? AND FiscalYear = ? ")
                         .append("GROUP BY PositionTitleCategory WITH ROLLUP");
         PreparedStatement preparedStatement = jdbc.getPrepareStatement(sql.toString());
-        preparedStatement.setString(1, sessionUserId);
+        preparedStatement.setString(1, userId);
         preparedStatement.setInt(2, fiscalYear);
         ResultSet rs = preparedStatement.executeQuery();
 
@@ -79,7 +79,7 @@ public class SOM_BFA_ReconEmployeeGLVImpl implements SOM_BFA_ReconEmployeeGLV {
     }
 
     @Override
-    public List<HashMap<String, Object>> getExpenseDetail(String sessionUserId, String empName, int start, int length)
+    public List<HashMap<String, Object>> getExpenseDetail(String userId, String empName, int start, int length)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
         StringBuilder whereCondition = new StringBuilder("SessionUserid = ? ");
         boolean isEmpNameNull = true;
@@ -96,7 +96,7 @@ public class SOM_BFA_ReconEmployeeGLVImpl implements SOM_BFA_ReconEmployeeGLV {
             sql.append(String.format("OFFSET %d ROWS FETCH NEXT %d ROWS ONLY", start, length));
         }
         PreparedStatement preparedStatement = jdbc.getPrepareStatement(sql.toString());
-        preparedStatement.setString(1, sessionUserId);
+        preparedStatement.setString(1, userId);
         if (!isEmpNameNull) {
             preparedStatement.setString(2, empName);
         }
@@ -111,7 +111,7 @@ public class SOM_BFA_ReconEmployeeGLVImpl implements SOM_BFA_ReconEmployeeGLV {
     }
 
     @Override
-    public int countExpenseDetail(String sessionUserId, String empName, int start, int length)
+    public int countExpenseDetail(String userId, String empName, int start, int length)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
         StringBuilder whereCondition = new StringBuilder("SessionUserid = ? ");
         boolean isEmpNameNull = true;
@@ -124,7 +124,7 @@ public class SOM_BFA_ReconEmployeeGLVImpl implements SOM_BFA_ReconEmployeeGLV {
                 .append(whereCondition);
 
         PreparedStatement preparedStatement = jdbc.getPrepareStatement(sql.toString());
-        preparedStatement.setString(1, sessionUserId);
+        preparedStatement.setString(1, userId);
         if (!isEmpNameNull) {
             preparedStatement.setString(2, empName);
         }

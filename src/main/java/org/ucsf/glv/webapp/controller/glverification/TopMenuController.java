@@ -20,9 +20,9 @@ public class TopMenuController {
 
     @GET
     @Path("get-child-dept-list")
-    public String getChildDeptList(@QueryParam("sessionUserId") String sessionUserId,
+    public String getChildDeptList(@QueryParam("userId") String userId,
             @QueryParam("deptId") String deptId)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
-        return topMenuService.getTopMenuData(sessionUserId, deptId);
+        return topMenuService.getTopMenuData(userId, deptId);
     }
 }

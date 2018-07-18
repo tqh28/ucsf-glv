@@ -28,16 +28,16 @@ public class ReviewAndVerifyPayrollController {
 
     @Path("get-payroll-fet-data")
     @GET
-    public String getPayrollFETData(@QueryParam("sessionUserId") String sessionUserId, @QueryParam("fy") int fy)
+    public String getPayrollFETData(@QueryParam("userId") String userId, @QueryParam("fy") int fy)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
-        return reviewAndVerifyPayrollService.getPayrollFTEData(sessionUserId, fy);
+        return reviewAndVerifyPayrollService.getPayrollFTEData(userId, fy);
     }
 
     @Path("get-payroll-expense-data")
     @GET
-    public String getPayrollExpenseData(@QueryParam("sessionUserId") String sessionUserId,
+    public String getPayrollExpenseData(@QueryParam("userId") String userId,
             @QueryParam("empName") String empName, @QueryParam("start") int start, @QueryParam("length") int length)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
-        return reviewAndVerifyPayrollService.getPayrollExpenseData(sessionUserId, empName, start, length);
+        return reviewAndVerifyPayrollService.getPayrollExpenseData(userId, empName, start, length);
     }
 }

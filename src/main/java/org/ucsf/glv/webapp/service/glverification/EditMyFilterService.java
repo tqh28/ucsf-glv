@@ -11,6 +11,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.ucsf.glv.webapp.repository.SOM_BFA_SavedChartFieldFilters;
 import org.ucsf.glv.webapp.repository.VW_COA_SOM_Funds_Tree;
+import org.ucsf.glv.webapp.repository.VW_COA_SOM_ProjectUses;
 import org.ucsf.glv.webapp.repository.VW_SOM_BFA_ReconGroups;
 
 import com.google.inject.Inject;
@@ -28,6 +29,9 @@ public class EditMyFilterService {
 
     @Inject
     private VW_COA_SOM_Funds_Tree fundsTree;
+
+    @Inject
+    private VW_COA_SOM_ProjectUses projectUsers;
 
     public String getFilterList(String userId, String deptId)
             throws JsonGenerationException, JsonMappingException, IOException, SQLException {
@@ -75,9 +79,13 @@ public class EditMyFilterService {
     public String getFundList() throws JsonGenerationException, JsonMappingException, IOException, SQLException {
         return mapper.writeValueAsString(fundsTree.getFundList());
     }
-    
+
     public String getProjectMgrList(String deptId)
             throws JsonGenerationException, JsonMappingException, IOException, SQLException {
         return mapper.writeValueAsString(reconGroups.getProjectMgrList(deptId));
+    }
+
+    public String getProjectUseList() throws JsonGenerationException, JsonMappingException, IOException, SQLException {
+        return mapper.writeValueAsString(projectUsers.getProjectUseList());
     }
 }

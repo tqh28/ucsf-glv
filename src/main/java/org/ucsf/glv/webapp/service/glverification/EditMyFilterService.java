@@ -62,4 +62,9 @@ public class EditMyFilterService {
 
         return mapper.writeValueAsString(result);
     }
+
+    public String getProjectList(String deptId)
+            throws JsonGenerationException, JsonMappingException, IOException, SQLException {
+        return mapper.writeValueAsString(reconGroups.getProjectList(deptId));
+    }
 }

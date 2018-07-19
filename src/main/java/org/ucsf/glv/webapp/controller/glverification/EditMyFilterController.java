@@ -32,4 +32,11 @@ public class EditMyFilterController {
             throws JsonGenerationException, JsonMappingException, SQLException, IOException {
         return editMyFilterService.getFilterData(filterId, userId, deptId);
     }
+
+    @GET
+    @Path("get-project-list")
+    public String getProjectList(@QueryParam("deptId") String deptId)
+            throws JsonGenerationException, JsonMappingException, IOException, SQLException {
+        return editMyFilterService.getProjectList(deptId);
+    }
 }

@@ -9,6 +9,7 @@ import org.ucsf.glv.webapp.repository.SOM_BFA_SavedChartFieldFilters;
 import org.ucsf.glv.webapp.repository.SOM_BFA_UserPreferences;
 import org.ucsf.glv.webapp.repository.SOM_BFA_Variables;
 import org.ucsf.glv.webapp.repository.VW_COA_SOM_Departments;
+import org.ucsf.glv.webapp.repository.VW_COA_SOM_Funds_Tree;
 import org.ucsf.glv.webapp.repository.VW_Get_Deparments;
 import org.ucsf.glv.webapp.repository.VW_SOM_AA_Dashboard;
 import org.ucsf.glv.webapp.repository.VW_SOM_BFA_ReconGroups;
@@ -19,6 +20,7 @@ import org.ucsf.glv.webapp.repository.impl.SOM_BFA_SavedChartFieldFiltersImpl;
 import org.ucsf.glv.webapp.repository.impl.SOM_BFA_UserPreferencesImpl;
 import org.ucsf.glv.webapp.repository.impl.SOM_BFA_VariablesImpl;
 import org.ucsf.glv.webapp.repository.impl.VW_COA_SOM_DepartmentsImpl;
+import org.ucsf.glv.webapp.repository.impl.VW_COA_SOM_Funds_TreeImpl;
 import org.ucsf.glv.webapp.repository.impl.VW_Get_DeparmentsImpl;
 import org.ucsf.glv.webapp.repository.impl.VW_SOM_AA_DashboardImpl;
 import org.ucsf.glv.webapp.repository.impl.VW_SOM_BFA_ReconGroupsImpl;
@@ -50,6 +52,7 @@ public class GuiceModule extends AbstractModule {
         bind(VW_Get_Deparments.class).to(VW_Get_DeparmentsImpl.class);
         bind(VW_SOM_AA_Dashboard.class).to(VW_SOM_AA_DashboardImpl.class);
         bind(VW_SOM_BFA_ReconGroups.class).to(VW_SOM_BFA_ReconGroupsImpl.class);
+        bind(VW_COA_SOM_Funds_Tree.class).to(VW_COA_SOM_Funds_TreeImpl.class);
 
         bind(HomeService.class).toInstance(new HomeService());
         bind(TopMenuService.class).toInstance(new TopMenuService());

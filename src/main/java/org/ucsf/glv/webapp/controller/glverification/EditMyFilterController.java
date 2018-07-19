@@ -39,4 +39,10 @@ public class EditMyFilterController {
             throws JsonGenerationException, JsonMappingException, IOException, SQLException {
         return editMyFilterService.getProjectList(deptId);
     }
+
+    @GET
+    @Path("get-fund-list")
+    public String getFundList() throws JsonGenerationException, JsonMappingException, IOException, SQLException {
+        return editMyFilterService.getFundList();
+    }
 }

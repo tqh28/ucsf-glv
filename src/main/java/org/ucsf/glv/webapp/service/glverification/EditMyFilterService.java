@@ -75,4 +75,9 @@ public class EditMyFilterService {
     public String getFundList() throws JsonGenerationException, JsonMappingException, IOException, SQLException {
         return mapper.writeValueAsString(fundsTree.getFundList());
     }
+    
+    public String getProjectMgrList(String deptId)
+            throws JsonGenerationException, JsonMappingException, IOException, SQLException {
+        return mapper.writeValueAsString(reconGroups.getProjectMgrList(deptId));
+    }
 }

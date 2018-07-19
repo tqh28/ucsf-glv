@@ -45,4 +45,11 @@ public class EditMyFilterController {
     public String getFundList() throws JsonGenerationException, JsonMappingException, IOException, SQLException {
         return editMyFilterService.getFundList();
     }
+    
+    @GET
+    @Path("get-project-mgr-list")
+    public String getProjectMgrList(@QueryParam("deptId") String deptId)
+            throws JsonGenerationException, JsonMappingException, IOException, SQLException {
+        return editMyFilterService.getProjectMgrList(deptId);
+    }
 }

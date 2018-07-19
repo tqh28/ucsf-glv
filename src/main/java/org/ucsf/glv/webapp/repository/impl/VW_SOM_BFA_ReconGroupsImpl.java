@@ -57,4 +57,22 @@ public class VW_SOM_BFA_ReconGroupsImpl implements VW_SOM_BFA_ReconGroups {
         
     }
 
+    @Override
+    public List<HashMap<String, Object>> getProjectMgrList(String deptId) throws SQLException {
+        StringBuilder sql = new StringBuilder("SELECT ProjectManager, ProjectManagerCd ")
+                .append("FROM vw_SOM_BFA_ReconGroups ")
+                .append("WHERE ReconDeptCd = ? ")
+                .append("GROUP BY ProjectManager, ProjectManagerCd");
+        
+        PreparedStatement preparedStatement = jdbc.getPrepareStatement(sql.toString());
+        preparedStatement.setString(1, deptId);
+        
+        ResultSet rs = preparedStatement.executeQuery();
+        List<HashMap<String, Object>> result = convertData.convertResultSetToListHashMap(rs);
+        
+        rs.close();
+        preparedStatement.close();
+        return result;
+    }
+
 }

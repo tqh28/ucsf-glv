@@ -9,4 +9,6 @@ public interface VW_SOM_BFA_ReconGroups {
     public String getProjectMgrCdByProjectMgr(String projectMgr) throws SQLException;
 
     public List<HashMap<String, Object>> getProjectList(String deptId) throws SQLException;
+
+    public List<HashMap<String, Object>> getProjectMgrList(String deptId) throws SQLException;
 }

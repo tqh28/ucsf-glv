@@ -17,6 +17,12 @@ public class DashboardController {
 
     @Inject
     private DashboardService dashboardService;
+    
+    @GET
+    @Path("get-user-data")
+    public String getUserData(@QueryParam("userId") String userId) throws SQLException {
+        return dashboardService.getUserData(userId);
+    }
 
     @GET
     @Path("get-dashboard-data")

@@ -46,4 +46,12 @@ public class SOM_AA_TransactionSummaryImpl implements SOM_AA_TransactionSummary 
 
         return json;
     }
+
+    @Override
+    public void deleteBySessionUserId(String sessionUserId) throws SQLException {
+        String sql = "DELETE FROM SOM_AA_TransactionSummary WHERE SessionUserid = ?";
+        PreparedStatement preparedStatement = jdbc.getPrepareStatement(sql);
+        preparedStatement.setString(1, sessionUserId);
+        preparedStatement.executeUpdate();
+    }
 }

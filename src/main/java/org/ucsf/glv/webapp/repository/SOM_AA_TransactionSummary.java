@@ -8,4 +8,5 @@ public interface SOM_AA_TransactionSummary {
 
     public List<HashMap<String, Object>> getReviewAndVerifyTransactions(String userId, String reconGroupTitle) throws SQLException;
 
+    public void deleteBySessionUserId(String sessionUserId) throws SQLException;
 }

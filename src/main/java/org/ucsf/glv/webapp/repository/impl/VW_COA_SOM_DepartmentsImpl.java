@@ -63,4 +63,21 @@ public class VW_COA_SOM_DepartmentsImpl implements VW_COA_SOM_Departments {
         return result;
     }
 
+    @Override
+    public Integer getDeptLevelByDeptCd(String deptCd) throws SQLException {
+        String sql = "SELECT DeptLevel FROM vw_COA_SOM_Departments WHERE DeptCd = ?";
+        PreparedStatement preparedStatement = jdbc.getPrepareStatement(sql);
+        preparedStatement.setString(1, deptCd);
+        ResultSet rs = preparedStatement.executeQuery();
+        
+        Object object = convertData.getObjectFromResultSet(rs);
+        rs.close();
+        preparedStatement.close();
+        
+        if (object == null)
+            return null;
+        else
+            return (Integer) object;
+    }
+
 }

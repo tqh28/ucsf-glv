@@ -2,6 +2,7 @@ package org.ucsf.glv.webapp.config.guice;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.ucsf.glv.webapp.config.connection.Jdbc;
+import org.ucsf.glv.webapp.repository.FN_SOM_BFA_GetWhereFromSavedFilter;
 import org.ucsf.glv.webapp.repository.SOM_AA_Dashboard;
 import org.ucsf.glv.webapp.repository.SOM_AA_EmployeeListRolling;
 import org.ucsf.glv.webapp.repository.SOM_AA_TransactionSummary;
@@ -17,6 +18,8 @@ import org.ucsf.glv.webapp.repository.VW_COA_SOM_ProjectUses;
 import org.ucsf.glv.webapp.repository.VW_Get_Deparments;
 import org.ucsf.glv.webapp.repository.VW_SOM_AA_Dashboard;
 import org.ucsf.glv.webapp.repository.VW_SOM_BFA_ReconGroups;
+import org.ucsf.glv.webapp.repository.VW_SOM_BFA_SavedChartFieldFilters;
+import org.ucsf.glv.webapp.repository.impl.FN_SOM_BFA_GetWhereFromSavedFilterImpl;
 import org.ucsf.glv.webapp.repository.impl.SOM_AA_DashboardImpl;
 import org.ucsf.glv.webapp.repository.impl.SOM_AA_EmployeeListRollingImpl;
 import org.ucsf.glv.webapp.repository.impl.SOM_AA_TransactionSummaryImpl;
@@ -32,6 +35,7 @@ import org.ucsf.glv.webapp.repository.impl.VW_COA_SOM_ProjectUsesImpl;
 import org.ucsf.glv.webapp.repository.impl.VW_Get_DeparmentsImpl;
 import org.ucsf.glv.webapp.repository.impl.VW_SOM_AA_DashboardImpl;
 import org.ucsf.glv.webapp.repository.impl.VW_SOM_BFA_ReconGroupsImpl;
+import org.ucsf.glv.webapp.repository.impl.VW_SOM_BFA_SavedChartFieldFiltersImpl;
 import org.ucsf.glv.webapp.service.glverification.DashboardService;
 import org.ucsf.glv.webapp.service.glverification.EditMyFilterService;
 import org.ucsf.glv.webapp.service.glverification.ReviewAndVerifyPayrollService;
@@ -65,8 +69,11 @@ public class GuiceModule extends AbstractModule {
         bind(VW_SOM_AA_Dashboard.class).to(VW_SOM_AA_DashboardImpl.class);
         bind(VW_SOM_BFA_ReconGroups.class).to(VW_SOM_BFA_ReconGroupsImpl.class);
         bind(VW_COA_SOM_Funds_Tree.class).to(VW_COA_SOM_Funds_TreeImpl.class);
+        bind(VW_SOM_BFA_SavedChartFieldFilters.class).to(VW_SOM_BFA_SavedChartFieldFiltersImpl.class);
 
         bind(SP_SOM_GLV_Summary_AARolling.class).to(SP_SOM_GLV_Summary_AARollingImpl.class);
+        
+        bind(FN_SOM_BFA_GetWhereFromSavedFilter.class).to(FN_SOM_BFA_GetWhereFromSavedFilterImpl.class);
 
         bind(HomeService.class).toInstance(new HomeService());
         bind(TopMenuService.class).toInstance(new TopMenuService());

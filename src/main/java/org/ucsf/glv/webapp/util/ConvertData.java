@@ -46,9 +46,8 @@ public class ConvertData {
     }
 
     /**
-     * @param rs,
-     *            rs must have only ONE ROW and this row must have only ONE COLUMN
-     * @return the number of records in select count(*) query
+     * @param rs must have only ONE ROW and this row must have only ONE COLUMN
+     * @return data of this query
      */
     public Object getObjectFromResultSet(ResultSet rs) {
         try {
@@ -67,8 +66,7 @@ public class ConvertData {
     }
 
     /**
-     * @param rs,
-     *            rs must have only ONE row
+     * @param rs must have only ONE row
      * @param columnName
      * @return data of column name
      */

@@ -51,15 +51,15 @@ public class DashboardService {
         int fp = variables.getFPFYDefault("DefaultFPMax");
         int fy = variables.getFPFYDefault("DefaultFY");
         
-        if (fp < 7) {
-            fp += 6;
-            fy -= 1;
-        } else {
-            fp -= 6;
-        }
+//        if (fp < 7) {
+//            fp += 6;
+//            fy -= 1;
+//        } else {
+//            fp -= 6;
+//        }
         
         // call store procedure
-        summaryAARolling.execute(userId, "", "", "SFCMP", "%", userId, "(default)", fy, fp, 1);
+        summaryAARolling.execute(userId, "127037", "127037", "SFCMP", "%", userId, "(default)", fy, fp, 1);
         
         return "";
     }

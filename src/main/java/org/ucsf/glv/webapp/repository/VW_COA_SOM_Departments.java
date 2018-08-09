@@ -10,4 +10,5 @@ public interface VW_COA_SOM_Departments {
     
     public List<HashMap<String, Object>> getListDepartmentByDeptId(String deptId) throws SQLException;
 
+    public Integer getDeptLevelByDeptCd (String deptCd) throws SQLException;
 }

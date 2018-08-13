@@ -1,6 +1,7 @@
 package org.ucsf.glv.webapp.repository.impl;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +10,6 @@ import java.util.List;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
-import org.ucsf.glv.webapp.config.connection.Jdbc;
 import org.ucsf.glv.webapp.repository.SOM_BFA_ReconEmployeeGLV;
 import org.ucsf.glv.webapp.util.ConvertData;
 
@@ -18,13 +18,10 @@ import com.google.inject.Inject;
 public class SOM_BFA_ReconEmployeeGLVImpl implements SOM_BFA_ReconEmployeeGLV {
 
     @Inject
-    private Jdbc jdbc;
-
-    @Inject
     private ConvertData convertData;
 
     @Override
-    public List<HashMap<String, Object>> getVerifyPayroll(String deptId, String businessUnit, String fiscalYear,
+    public List<HashMap<String, Object>> getVerifyPayroll(Connection connection, String deptId, String businessUnit, String fiscalYear,
             String fiscalMonth) throws SQLException {
         StringBuilder sql = new StringBuilder(
                 "SELECT uniqueid, PositionTitleCategory, Employee_Id, Employee_name, ReconComment, DeptCd, FundCd, ProjectCd, FunctionCd, FlexCd, DeptSite, PlanTitleCdTitle, ReconUser, ReconDate, S05_Nov, ReconStatusCd ")
@@ -32,7 +29,7 @@ public class SOM_BFA_ReconEmployeeGLVImpl implements SOM_BFA_ReconEmployeeGLV {
                         .append("WHERE (DeptLevel1Cd = ? OR DeptLevel2Cd = ? OR DeptLevel3Cd = ? OR DeptLevel4Cd = ? OR DeptLevel5Cd = ? OR DeptLevel6Cd = ?) AND ReconStatusCd IN (0, 1000, 3000) AND FiscalYear = ? AND FiscalPeriod = ? AND BusinessUnitCd = ? ")
                         .append("ORDER BY PositionTitleCategory ASC");
 
-        PreparedStatement preparedStatement = jdbc.getPrepareStatement(sql.toString());
+        PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
         preparedStatement.setString(1, deptId);
         preparedStatement.setString(2, deptId);
         preparedStatement.setString(3, deptId);
@@ -44,7 +41,6 @@ public class SOM_BFA_ReconEmployeeGLVImpl implements SOM_BFA_ReconEmployeeGLV {
         preparedStatement.setString(9, businessUnit);
 
         ResultSet rs = preparedStatement.executeQuery();
-
         List<HashMap<String, Object>> result = convertData.convertResultSetToListHashMap(rs);
         rs.close();
         preparedStatement.close();
@@ -52,7 +48,7 @@ public class SOM_BFA_ReconEmployeeGLVImpl implements SOM_BFA_ReconEmployeeGLV {
     }
 
     @Override
-    public List<HashMap<String, Object>> getListCategorySumary(String userId, int fiscalYear)
+    public List<HashMap<String, Object>> getListCategorySumary(Connection connection, String userId, int fiscalYear)
             throws SQLException {
         StringBuilder sql = new StringBuilder(
                 "SELECT ISNULL(PositionTitleCategory, 'Total') AS PositionTitleCategory, ").append(
@@ -65,21 +61,19 @@ public class SOM_BFA_ReconEmployeeGLVImpl implements SOM_BFA_ReconEmployeeGLV {
                         .append("FROM vw_SOM_AA_EmployeeCategorySummary ")
                         .append("WHERE SessionUserid = ? AND FiscalYear = ? ")
                         .append("GROUP BY PositionTitleCategory WITH ROLLUP");
-        PreparedStatement preparedStatement = jdbc.getPrepareStatement(sql.toString());
+        PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
         preparedStatement.setString(1, userId);
         preparedStatement.setInt(2, fiscalYear);
         ResultSet rs = preparedStatement.executeQuery();
 
         List<HashMap<String, Object>> result = convertData.convertResultSetToListHashMap(rs);
-
         rs.close();
         preparedStatement.close();
-
         return result;
     }
 
     @Override
-    public List<HashMap<String, Object>> getExpenseDetail(String userId, String empName, int start, int length)
+    public List<HashMap<String, Object>> getExpenseDetail(Connection connection, String userId, String empName, int start, int length)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
         StringBuilder whereCondition = new StringBuilder("SessionUserid = ? ");
         boolean isEmpNameNull = true;
@@ -95,7 +89,7 @@ public class SOM_BFA_ReconEmployeeGLVImpl implements SOM_BFA_ReconEmployeeGLV {
         if (length != 0) {
             sql.append(String.format("OFFSET %d ROWS FETCH NEXT %d ROWS ONLY", start, length));
         }
-        PreparedStatement preparedStatement = jdbc.getPrepareStatement(sql.toString());
+        PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
         preparedStatement.setString(1, userId);
         if (!isEmpNameNull) {
             preparedStatement.setString(2, empName);
@@ -103,15 +97,13 @@ public class SOM_BFA_ReconEmployeeGLVImpl implements SOM_BFA_ReconEmployeeGLV {
 
         ResultSet rs = preparedStatement.executeQuery();
         List<HashMap<String, Object>> result = convertData.convertResultSetToListHashMap(rs);
-
         rs.close();
         preparedStatement.close();
-
         return result;
     }
 
     @Override
-    public int countExpenseDetail(String userId, String empName, int start, int length)
+    public int countExpenseDetail(Connection connection, String userId, String empName, int start, int length)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
         StringBuilder whereCondition = new StringBuilder("SessionUserid = ? ");
         boolean isEmpNameNull = true;
@@ -123,7 +115,7 @@ public class SOM_BFA_ReconEmployeeGLVImpl implements SOM_BFA_ReconEmployeeGLV {
         StringBuilder sql = new StringBuilder("SELECT COUNT(*) AS numrows FROM SOM_AA_EmployeeListRolling WHERE ")
                 .append(whereCondition);
 
-        PreparedStatement preparedStatement = jdbc.getPrepareStatement(sql.toString());
+        PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
         preparedStatement.setString(1, userId);
         if (!isEmpNameNull) {
             preparedStatement.setString(2, empName);
@@ -131,10 +123,8 @@ public class SOM_BFA_ReconEmployeeGLVImpl implements SOM_BFA_ReconEmployeeGLV {
 
         ResultSet rs = preparedStatement.executeQuery();
         int totalRecords = (int) convertData.getObjectFromResultSet(rs);
-
         rs.close();
         preparedStatement.close();
-
         return totalRecords;
     }
 

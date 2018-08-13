@@ -1,5 +1,6 @@
 package org.ucsf.glv.webapp.repository.impl;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +20,7 @@ public class FN_SOM_BFA_GetWhereFromSavedFilterImpl implements FN_SOM_BFA_GetWhe
     private VW_SOM_BFA_SavedChartFieldFilters savedChartFieldFilters;
 
     @Override
-    public String execute(String vUserId, String vDeptCdSaved, String vDeptCdOverride, String vFilterName,
+    public String execute(Connection connection, String vUserId, String vDeptCdSaved, String vDeptCdOverride, String vFilterName,
             int vReturnType) throws SQLException {
 
         String vSQLDeptCdSaved;
@@ -88,13 +89,13 @@ public class FN_SOM_BFA_GetWhereFromSavedFilterImpl implements FN_SOM_BFA_GetWhe
         String vListXFunctionCd = "";
         String vListXFlexCd = "";
 
-        vDeptCdSavedLevel = departments.getDeptLevelByDeptCd(vDeptCdSaved);
+        vDeptCdSavedLevel = departments.getDeptLevelByDeptCd(connection, vDeptCdSaved);
 
         if (vDeptCdOverride != null) {
-            vDeptCdOverrideLevel = departments.getDeptLevelByDeptCd(vDeptCdOverride);
+            vDeptCdOverrideLevel = departments.getDeptLevelByDeptCd(connection, vDeptCdOverride);
         }
 
-        List<HashMap<String, Object>> savedFilters = savedChartFieldFilters.getDataForGetWhereSavedFilter(vUserId,
+        List<HashMap<String, Object>> savedFilters = savedChartFieldFilters.getDataForGetWhereSavedFilter(connection, vUserId,
                 vFilterName, vDeptCdSaved, vDeptCdOverride);
         for (HashMap<String, Object> filter : savedFilters) {
             vChartStrField = (String) filter.get("ChartStrField");

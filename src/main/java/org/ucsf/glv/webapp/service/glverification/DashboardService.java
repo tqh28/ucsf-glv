@@ -1,12 +1,15 @@
 package org.ucsf.glv.webapp.service.glverification;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.ucsf.glv.webapp.config.connection.Jdbc;
 import org.ucsf.glv.webapp.repository.SOM_BFA_ReconApproveTrend;
 import org.ucsf.glv.webapp.repository.SOM_BFA_Variables;
 import org.ucsf.glv.webapp.repository.SP_SOM_GLV_Summary_AARolling;
@@ -17,6 +20,9 @@ import com.google.inject.Singleton;
 
 @Singleton
 public class DashboardService {
+
+    @Inject
+    private Jdbc jdbc;
 
     @Inject
     private VW_SOM_AA_Dashboard dashboard;
@@ -35,31 +41,63 @@ public class DashboardService {
 
     public String getDashboardData(String userId)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
-        String json = mapper.writeValueAsString(dashboard.getDashboardData(userId));
-        return json;
+        Connection connection = jdbc.getConnection();
+        List<HashMap<String, Object>> res = null;
+        try {
+            res = dashboard.getDashboardData(connection, userId);
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
+        return mapper.writeValueAsString(res);
     }
 
     public String getMonthlyTrendPercent(String deptId, int fy, int fp)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
-        int trendPercent = reconApproveTrend.getMonthlyTrendPercent(deptId, fy, fp);
+        Connection connection = jdbc.getConnection();
+        int trendPercent;
+        try {
+            trendPercent = reconApproveTrend.getMonthlyTrendPercent(connection, deptId, fy, fp);
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
+        
         HashMap<String, Integer> result = new HashMap<>();
         result.put("monthlyPercentage", trendPercent);
         return mapper.writeValueAsString(result);
     }
 
     public String getUserData(String userId) throws SQLException {
-        int fp = variables.getFPFYDefault("DefaultFPMax");
-        int fy = variables.getFPFYDefault("DefaultFY");
+        Connection connection = jdbc.getConnection();
         
-//        if (fp < 7) {
-//            fp += 6;
-//            fy -= 1;
-//        } else {
-//            fp -= 6;
-//        }
+        try {
+            int fp = variables.getFPFYDefault(connection, "DefaultFPMax");
+            int fy = variables.getFPFYDefault(connection, "DefaultFY");
+            
+//            if (fp < 7) {
+//                fp += 6;
+//                fy -= 1;
+//            } else {
+//                fp -= 6;
+//            }
+            
+            // call store procedure
+            summaryAARolling.execute(connection, userId, "127037", "127037", "SFCMP", "%", userId, "(default)", fy, fp, 1);
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
         
-        // call store procedure
-        summaryAARolling.execute(userId, "127037", "127037", "SFCMP", "%", userId, "(default)", fy, fp, 1);
         
         return "";
     }

@@ -1,6 +1,7 @@
 package org.ucsf.glv.webapp.service.glverification;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -10,6 +11,7 @@ import java.util.List;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.ucsf.glv.webapp.config.connection.Jdbc;
 import org.ucsf.glv.webapp.repository.SOM_BFA_UserPreferences;
 import org.ucsf.glv.webapp.repository.SOM_BFA_Variables;
 import org.ucsf.glv.webapp.repository.VW_COA_SOM_Departments;
@@ -17,6 +19,9 @@ import org.ucsf.glv.webapp.repository.VW_COA_SOM_Departments;
 import com.google.inject.Inject;
 
 public class TopMenuService {
+
+    @Inject
+    private Jdbc jdbc;
 
     @Inject
     private SOM_BFA_UserPreferences userPreferences;
@@ -32,19 +37,29 @@ public class TopMenuService {
 
     public String getTopMenuData(String userId, String deptId)
             throws JsonGenerationException, JsonMappingException, SQLException, IOException {
+        Connection connection = jdbc.getConnection();
         HashMap<String, Object> map = new HashMap<>();
-        map.put("deptList", getDeptIdList(userId, deptId));
-        map.put("reportDate", getReportDate());
+        try {
+            map.put("deptList", getDeptIdList(connection, userId, deptId));
+            map.put("reportDate", getReportDate(connection));
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
 
         return mapper.writeValueAsString(map);
     }
 
-    private HashMap<String, Object> getDeptIdList(String userId, String urlDeptId)
+    private HashMap<String, Object> getDeptIdList(Connection connection, String userId, String urlDeptId)
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
         String deptId = null;
-        String defaultDeptId = userPreferences.getDefaultDeptIdByUserId(userId);
+        String defaultDeptId = userPreferences.getDefaultDeptIdByUserId(connection, userId);
 
-        List<HashMap<String, Object>> listDepartments = departments.getListDepartmentByDeptId(defaultDeptId);
+        List<HashMap<String, Object>> listDepartments = departments.getListDepartmentByDeptId(connection,
+                defaultDeptId);
 
         if (urlDeptId == null || urlDeptId.equals("")) {
             deptId = defaultDeptId;
@@ -75,9 +90,9 @@ public class TopMenuService {
         return false;
     }
 
-    private String getReportDate() throws SQLException {
-        int fp = variables.getFPFYDefault("DefaultFPMax");
-        int fy = variables.getFPFYDefault("DefaultFY");
+    private String getReportDate(Connection connection) throws SQLException {
+        int fp = variables.getFPFYDefault(connection, "DefaultFPMax");
+        int fy = variables.getFPFYDefault(connection, "DefaultFY");
 
         if (fp < 7) {
             fp += 6;

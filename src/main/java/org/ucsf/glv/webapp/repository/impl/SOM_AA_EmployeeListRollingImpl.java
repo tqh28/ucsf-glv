@@ -38,7 +38,8 @@ public class SOM_AA_EmployeeListRollingImpl implements SOM_AA_EmployeeListRollin
     }
 
     @Override
-    public void modifyByQuery(Connection connection, String query, String param1, Timestamp param2, String param3) throws SQLException {
+    public void modifyByQuery(Connection connection, String query, String param1, Timestamp param2, String param3)
+            throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, param1);
         preparedStatement.setTimestamp(2, param2);
@@ -48,7 +49,8 @@ public class SOM_AA_EmployeeListRollingImpl implements SOM_AA_EmployeeListRollin
     }
 
     @Override
-    public HashMap<String, BigDecimal> getCountAndSumM01FromByQuery(Connection connection, String query, String param1) throws SQLException {
+    public HashMap<String, BigDecimal> getCountAndSumM01FromByQuery(Connection connection, String query, String param1)
+            throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, param1);
         ResultSet rs = preparedStatement.executeQuery();
@@ -62,6 +64,23 @@ public class SOM_AA_EmployeeListRollingImpl implements SOM_AA_EmployeeListRollin
         rs.close();
         preparedStatement.close();
         return result;
+    }
+
+    @Override
+    public void modifyByQuery(Connection connection, String query, String param1, Timestamp param2, int param3,
+            int param4, int param5, int param6, int param7, String param8, String param9) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, param1);
+        preparedStatement.setTimestamp(2, param2);
+        preparedStatement.setInt(3, param3);
+        preparedStatement.setInt(4, param4);
+        preparedStatement.setInt(5, param5);
+        preparedStatement.setInt(6, param6);
+        preparedStatement.setInt(7, param7);
+        preparedStatement.setString(8, param8);
+        preparedStatement.setString(9, param9);
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
     }
 
 }

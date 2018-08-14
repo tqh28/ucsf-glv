@@ -44,10 +44,6 @@ public class EditMyFilterService {
         List<HashMap<String, Object>> res;
         try {
             res = savedChartFieldFilters.getFilterList(connection, userId, deptId);
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
         } finally {
             connection.close();
         }
@@ -86,10 +82,6 @@ public class EditMyFilterService {
                     result.add(element);
                 }
             }
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
         } finally {
             connection.close();
         }
@@ -103,10 +95,6 @@ public class EditMyFilterService {
         List<HashMap<String, Object>> res;
         try {
             res = reconGroups.getProjectList(connection, deptId);
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
         } finally {
             connection.close();
         }
@@ -119,10 +107,6 @@ public class EditMyFilterService {
         List<HashMap<String, Object>> res;
         try {
             res = fundsTree.getFundList(connection);
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
         } finally {
             connection.close();
         }
@@ -136,10 +120,6 @@ public class EditMyFilterService {
         List<HashMap<String, Object>> res;
         try {
             res = reconGroups.getProjectMgrList(connection, deptId);
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
         } finally {
             connection.close();
         }
@@ -152,10 +132,6 @@ public class EditMyFilterService {
         List<HashMap<String, Object>> res;
         try {
             res = projectUsers.getProjectUseList(connection);
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
         } finally {
             connection.close();
         }

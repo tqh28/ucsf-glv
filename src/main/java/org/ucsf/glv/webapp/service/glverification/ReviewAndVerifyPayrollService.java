@@ -33,10 +33,6 @@ public class ReviewAndVerifyPayrollService {
         List<HashMap<String, Object>> res;
         try {
             res = reconEmployee.getVerifyPayroll(connection, deptId, businessUnit, fiscalYear, fiscalMonth);
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
         } finally {
             connection.close();
         }
@@ -50,10 +46,6 @@ public class ReviewAndVerifyPayrollService {
         List<HashMap<String, Object>> res;
         try {
             res = reconEmployee.getListCategorySumary(connection, userId, fiscalYear);
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
         } finally {
             connection.close();
         }
@@ -64,7 +56,6 @@ public class ReviewAndVerifyPayrollService {
             throws SQLException, JsonGenerationException, JsonMappingException, IOException {
         Connection connection = jdbc.getConnection();
         HashMap<String, Object> resultMap;
-        
         try {
             List<HashMap<String, Object>> data = reconEmployee.getExpenseDetail(connection, userId, empName, start, length);
             int totalRecords = reconEmployee.countExpenseDetail(connection, userId, empName, start, length);
@@ -73,11 +64,6 @@ public class ReviewAndVerifyPayrollService {
             resultMap.put("data", data);
             resultMap.put("recordsTotal", totalRecords);
             resultMap.put("recordsFiltered", totalRecords);
-            
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
         } finally {
             connection.close();
         }

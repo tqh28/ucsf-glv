@@ -45,10 +45,6 @@ public class DashboardService {
         List<HashMap<String, Object>> res = null;
         try {
             res = dashboard.getDashboardData(connection, userId);
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
         } finally {
             connection.close();
         }
@@ -61,10 +57,6 @@ public class DashboardService {
         int trendPercent;
         try {
             trendPercent = reconApproveTrend.getMonthlyTrendPercent(connection, deptId, fy, fp);
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
         } finally {
             connection.close();
         }
@@ -76,7 +68,7 @@ public class DashboardService {
 
     public String getUserData(String userId) throws SQLException {
         Connection connection = jdbc.getConnection();
-        
+        connection.setAutoCommit(false);
         try {
             int fp = variables.getFPFYDefault(connection, "DefaultFPMax");
             int fy = variables.getFPFYDefault(connection, "DefaultFY");
@@ -97,7 +89,6 @@ public class DashboardService {
         } finally {
             connection.close();
         }
-        
         
         return "";
     }

@@ -42,14 +42,9 @@ public class TopMenuService {
         try {
             map.put("deptList", getDeptIdList(connection, userId, deptId));
             map.put("reportDate", getReportDate(connection));
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
         } finally {
             connection.close();
         }
-
         return mapper.writeValueAsString(map);
     }
 

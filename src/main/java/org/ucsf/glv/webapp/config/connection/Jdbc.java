@@ -19,7 +19,6 @@ public class Jdbc {
 
     public Connection getConnection() throws SQLException {
         Connection connection = DriverManager.getConnection(DatabaseCredentials.URL, DatabaseCredentials.USER, DatabaseCredentials.PASS);
-        connection.setAutoCommit(false);
         return connection;
     }
 

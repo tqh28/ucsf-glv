@@ -33,10 +33,6 @@ public class ReviewAndVerifyTransactionsService {
         List<HashMap<String, Object>> res;
         try {
             res = transactionSummary.getReviewAndVerifyTransactions(connection, userId, reconGroupTitle);
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
         } finally {
             connection.close();
         }

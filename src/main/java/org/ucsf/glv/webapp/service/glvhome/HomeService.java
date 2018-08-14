@@ -41,10 +41,6 @@ public class HomeService {
         List<HashMap<String, Object>> res = null;
         try {
             res = departmentsView.getControlPointList(connection);
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
         } finally {
             connection.close();
         }
@@ -65,10 +61,6 @@ public class HomeService {
             }
 
             departmentList = getDepartmentsView.getListRollUpByDeptId(connection, controlPointDefault);
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
         } finally {
             connection.close();
         }
@@ -90,10 +82,6 @@ public class HomeService {
             
             deptData = new HashMap<>();
             deptData.put("defaultDeptId", defaultDeptData);
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
         } finally {
             connection.close();
         }
